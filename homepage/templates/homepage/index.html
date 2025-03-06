@@ -2,7 +2,25 @@
 
 {% load static %}
 
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col">Page Header</div>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
-    <h1 class="diisplay-4 text-success">Homepage</h1>
-    <p>Welcome to the homepage!</p>
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col-7 col-md-6 my-auto">
+                <h1 class="display-4 text-black">The new collections are here</h1>
+                <div class="my-5">
+                    <h4>
+                        <a href="" class="btn btn-lgg rounded-0 text-uppercase py-3">Shop Now</a>
+                    </h4>
+                </div>
+            </div>            
+        </div>
+    </div>
 {% endblock %}
