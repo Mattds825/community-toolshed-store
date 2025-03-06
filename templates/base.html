@@ -57,5 +57,14 @@ This is the base template for the website. It contains the header, footer and th
     {% if messages %}
     <div class="message-container"></div>
     {% endif %}
+
+    {% block page_header %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block postload_js %}
+    {% endblock %}
   </body>
 </html>

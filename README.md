@@ -102,3 +102,6 @@ Deployment is done through Heruko
 - [Dbdiagram.io](https://dbdiagram.io/d) - used to create database schema
 
 ### Resources
+
+- the [code institute walkthrough project](https://github.com/Code-Institute-Solutions/boutique_ado_v1_sourcecode/tree/main/) was used as a starting point for this project
+and the tutorial lessons where followed in order to create this project 
