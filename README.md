@@ -103,5 +103,7 @@ Deployment is done through Heruko
 
 ### Resources
 
+- [Pexels](https://www.pexels.com/) used for royalty free images 
+    - home page image by ClickerHappy: https://www.pexels.com/photo/lawn-mower-vehicle-on-grass-589/
 - the [code institute walkthrough project](https://github.com/Code-Institute-Solutions/boutique_ado_v1_sourcecode/tree/main/) was used as a starting point for this project
 and the tutorial lessons where followed in order to create this project 

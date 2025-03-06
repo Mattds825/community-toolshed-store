@@ -28,16 +28,20 @@ This is the base template for the website. It contains the header, footer and th
       rel="stylesheet"
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
-    />
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/310ea35e5d.js" crossorigin="anonymous"></script>
+    /> 
+    <!-- google fonts  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <!-- custom css -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% endblock %}
 
     {% block extra_css %}
     {% endblock %}
 
-    <!--Popper and Bootstrap JS scripts -->
     {% block core_js %}
+    <!--Popper and Bootstrap JS scripts -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
       integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
@@ -48,6 +52,8 @@ This is the base template for the website. It contains the header, footer and th
       integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
       crossorigin="anonymous"
     ></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/310ea35e5d.js" crossorigin="anonymous"></script>
     {% endblock %}
 
     {% block extra_js %}
@@ -65,41 +71,46 @@ This is the base template for the website. It contains the header, footer and th
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'homepage' %}">Home</a>
-              </li>           
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="user-options" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 My Account
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="user-options">
-                    {% if request.user.is_authenticated %}
-                        {% if request.user.is_superuser %}                        
-                        <li><a href="" class="dropdown-item">Product Management</a></li>                    
-                        <li><hr class="dropdown-divider"></li>
-                        {% endif %}
-                    <li><a href="" class="dropdown-item">My Profile</a></li>
-                    <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
-                    {% else %}
-                    <li><a href="{% url 'account_signup' %}" class="dropdown-item">Register</a></li>
-                    <li><a href="{% url 'account_login' %}" class="dropdown-item">Login</a></li>
-                    {% endif %}                                                            
-                  </ul>               
-              </li>
-              <li class="nav-item">
-                <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="">
-                  <div class="text-center">
-                    <div><i class="fas fa-shopping-bag fa-lg"></i></div>
-                    <p class="my-0">
-                      {% if grand_total %}
-                        £{{ grand_total|floatformat:2 }}
-                      {% else %}
-                        £0.00
-                      {% endif %}
-                    </p>
-                  </div>
-                </a>
-              </li>
+                <!-- Home Page link -->
+                <li class="nav-item my-auto">
+                    <a class="nav-link active" aria-current="page" href="{% url 'homepage' %}">Home</a>
+                </li>           
+                <!-- /. Home Page link -->
+                 <!-- Account dropdown -->
+                 <li class="nav-item dropdown my-auto">
+                     <a class="nav-link dropdown-toggle" href="#" id="user-options" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         My Account</a>
+                        <ul class="dropdown-menu" aria-labelledby="user-options">
+                            {% if request.user.is_authenticated %}
+                            {% if request.user.is_superuser %}                        
+                            <li><a href="" class="dropdown-item">Product Management</a></li>                    
+                            <li><hr class="dropdown-divider"></li>
+                            {% endif %}
+                            <li><a href="" class="dropdown-item">My Profile</a></li>
+                            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                            {% else %}
+                            <li><a href="{% url 'account_signup' %}" class="dropdown-item">Register</a></li>
+                            <li><a href="{% url 'account_login' %}" class="dropdown-item">Login</a></li>
+                            {% endif %}                                                            
+                        </ul>                                       
+                </li>
+                <!-- /. Account dropdown -->
+                 <!--Shopping Cart -->
+                <li class="nav-item">
+                    <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="">
+                        <div class="text-center d-flex gap-1">
+                            <div><i class="fas fa-shopping-bag fa-lg"></i></div>
+                            <p class="my-0">
+                                {% if grand_total %}
+                                £{{ grand_total|floatformat:2 }}
+                                {% else %}
+                                £0.00
+                                {% endif %}
+                               </p>
+                        </div>
+                    </a>
+                </li>
+                   <!-- /. Shopping Cart -->
             </ul>
             <form class="d-flex" method="GET" action="">
               <input class="form-control me-2" type="search" placeholder="Search Our Site" aria-label="Search" name="q">
