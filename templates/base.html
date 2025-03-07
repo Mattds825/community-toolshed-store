@@ -63,6 +63,7 @@ This is the base template for the website. It contains the header, footer and th
   </head>
   <body>
     <header class="container-fluid px-0">
+    <!-- Site Nav Bar  -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="{% url 'homepage' %}">Community Toolshed</a>
@@ -119,7 +120,13 @@ This is the base template for the website. It contains the header, footer and th
           </div>
         </div>
       </nav>
-    </header>    
+      <!-- /. Site Nav Bar  -->
+    </header>
+    <!-- Items Nav Bar -->
+    <div class="row bg-white">
+        {% include 'includes/main-nav.html' %}        
+    </div>     
+    <!-- /. Items Nav Bar -->
 
     {% if messages %}
     <div class="message-container"></div>
