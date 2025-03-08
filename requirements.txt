@@ -11,3 +11,4 @@ oauthlib==3.2.2
 requests-oauthlib==2.0.0
 django-crispy-forms==2.0 
 crispy-bootstrap5==0.7
+pillow==10.3.0
