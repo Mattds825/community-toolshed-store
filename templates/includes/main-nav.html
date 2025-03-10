@@ -24,10 +24,10 @@ It is built around the base template of the CodeInsitute Boutique Ado project.
             Tools
         </a>
         <div class="dropdown-menu" aria-labelledby="tools-link">
-            <a href="" class="dropdown-item">Garden</a>
-            <a href="" class="dropdown-item">DIY</a>
-            <a href="" class="dropdown-item">Cleaning</a>
-            <a href="" class="dropdown-item">All Tools</a>
+            <a href="{% url 'products' %}?category=garden" class="dropdown-item">Garden</a>
+            <a href="{% url 'products' %}?category=diy" class="dropdown-item">DIY</a>
+            <a href="{% url 'products' %}?category=cleaning" class="dropdown-item">Cleaning</a>
+            <a href="{% url 'products' %}?category=garden,diy,cleaning" class="dropdown-item">All Tools</a>
         </div>
     </li>
 
@@ -36,9 +36,10 @@ It is built around the base template of the CodeInsitute Boutique Ado project.
             Party Supplies
         </a>
         <div class="dropdown-menu" aria-labelledby="party-supplies-link">
-            <a href="" class="dropdown-item">Cutlery &amp;Plates</a>
-            <a href="" class="dropdown-item">Cups &amp; Glasses</a>
-            <a href="" class="dropdown-item">All Party Supplies</a>
+            <a href="{% url 'products' %}?category=cutlery_plates" class="dropdown-item">Cutlery &amp; Plates</a>
+            <a href="{% url 'products' %}?category=cups_glasses" class="dropdown-item">Cups &amp; Glasses</a>
+            <a href="{% url 'products' %}?category=other_party_items" class="dropdown-item">Other</a>
+            <a href="{% url 'products' %}?category=cutlery_plates,cups_glasses,other_party_items" class="dropdown-item">All Party Supplies</a>
         </div>
     </li>
 
@@ -47,9 +48,9 @@ It is built around the base template of the CodeInsitute Boutique Ado project.
             Offers
         </a>
         <div class="dropdown-menu" aria-labelledby="offers-link">
-            <a href="" class="dropdown-item">New Additions</a>
-            <a href="" class="dropdown-item">Deals</a>                
-            <a href="" class="dropdown-item">All Specials</a>
+            <a href="{% url 'products' %}?category=new_additions" class="dropdown-item">New Additions</a>
+            <a href="{% url 'products' %}?category=deals" class="dropdown-item">Deals</a>                
+            <a href="{% url 'products' %}?category=new_additions,deals" class="dropdown-item">All Specials</a>
         </div>
     </li>
 </ul>

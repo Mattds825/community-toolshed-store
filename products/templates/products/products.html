@@ -31,6 +31,12 @@ This is the products template for the website. It contains the header, footer an
             <div class="col-10 offset-1">
                 <div class="row mt-1 mb-2"></div>
                 <div class="row">
+                    {% if products.count == 0 %}
+                        <div class="text-center">
+                            <p>Nothing to see here 👀</p>
+                            <p>Try a different search</p>
+                        </div>
+                    {% endif %}
                     {% for product in products %}
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                         <div class="card h-100 border-0">                            

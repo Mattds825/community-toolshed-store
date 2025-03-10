@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib import messages
-from django.db.models import Q, Case, When, CharField, ImageField
-from .models import Item, Tool, PartyItem
+from django.db.models import Q, F, Case, When, CharField, ImageField, IntegerField
+from .models import Item, Tool, PartyItem, Category
 
 # Create your views here.
 
@@ -13,41 +13,58 @@ def all_products(request):
     products = Item.objects.all()
     
     query = None
+    categories = None
     
     # for each of the products, add the image to the product depending on the type of product        
     products = Item.objects.all().annotate(
         description=Case(
-            When(type=0, then='tool__description'),
-            When(type=1, then='partyitem__description'),
+            When(type=0, then=F('tool__description')),
+            When(type=1, then=F('partyitem__description')),
             output_field=CharField(),
         ),
         keywords=Case(
-            When(type=0, then='tool__keywords'),
-            When(type=1, then='partyitem__keywords'),
+            When(type=0, then=F('tool__keywords')),
+            When(type=1, then=F('partyitem__keywords')),
             output_field=CharField(),
-        ),       
+        ),
+        image=Case(
+            When(type=0, then=F('tool__image')),
+            When(type=1, then=F('partyitem__image')),
+            output_field=ImageField(),
+        ),
         price=Case(
-            When(type=0, then='tool__price'),
-            When(type=1, then='partyitem__price'),
+            When(type=0, then=F('tool__price')),
+            When(type=1, then=F('partyitem__price')),
             output_field=CharField(),
         ),
         rating=Case(
-            When(type=0, then='tool__rating'),
-            When(type=1, then='partyitem__rating'),
+            When(type=0, then=F('tool__rating')),
+            When(type=1, then=F('partyitem__rating')),
             output_field=CharField(),
-        )
+        ),
+        category_name=Case(
+            When(type=0, then=F('tool__category__name')),
+            When(type=1, then=F('partyitem__category__name')),
+            output_field=CharField(),
+        ),
     )
     
     # quick fix to add image to product
-    for product in products:
+    for product in products:        
         if product.type == 0:            
-            product.image = product.tool.image
+            product.image = product.tool.image            
         elif product.type == 1:
-            product.image = product.party_item.image
+            product.image = product.party_item.image            
     
     
     # handle request to filter products by category
-    if request.GET:
+    if request.GET:        
+        # check category parameter
+        if 'category' in request.GET:
+            categories = request.GET['category'].split(',')            
+            products = products.filter(category_name__in=categories)                                                
+            categories = Category.objects.filter(name__in=categories)            
+        # check q parameter
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
@@ -57,17 +74,18 @@ def all_products(request):
             queries = Q(name__icontains=query) | Q(description__icontains=query) | Q(keywords__icontains=query)
             products = products.filter(queries)
             
-            # quick fix to add image to product
-            for product in products:
-                if product.type == 0:            
-                    product.image = product.tool.image
-                elif product.type == 1:
-                    product.image = product.party_item.image
+        # quick fix to add image to product
+        for product in products:
+            if product.type == 0:            
+                product.image = product.tool.image
+            elif product.type == 1:
+                product.image = product.party_item.image
         
     
     context = {
         'products': products, 
         'search_term': query,
+        'current_categories': categories,
     }
     
     return render(request, 'products/products.html', context)
