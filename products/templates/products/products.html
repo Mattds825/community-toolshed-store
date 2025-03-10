@@ -1,3 +1,11 @@
+<!-- 
+Created by Matthew G Da Silva 10/03/2025 
+
+It is built around the base template of the CodeInsitute Boutique Ado project products template.
+
+This is the products template for the website. It contains the header, footer and the main content block.
+-->
+
 {% extends 'base.html' %}
 
 {% load static %}
@@ -11,11 +19,71 @@
 {% endblock %}
 
 {% block content %}
-   <div class="container">
-    <div class="row">
-        <div class="col">
-            {{ products }}
+   <div class="h-100 w-100 position-fixed bg-light">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col mx-auto text-center">
+                <h2 class="my-2">Products</h2>
+                <hr class="w-50 mb-3 mx-auto">
+            </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-10 offset-1">
+                <div class="row mt-1 mb-2"></div>
+                <div class="row">
+                    {% for product in products %}
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                        <div class="card h-100 border-0">                            
+                            {% if product.image %}
+                            <a href="">
+                                <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
+                            </a>
+                            {% else %}
+                            <a href="">
+                                <img class="card-img-top img-fluid" src="../../../media/placeholder.jpg" alt="{{ product.name }}">
+                            </a>
+                            {% endif %}
+                            <div class="card-body pb-0">
+                                <p class="mb-0 font-weight-bold">{{ product.name }}</p>
+                            </div>
+                            <div class="card-footer bg-white pt-0 border-0 text-left">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="lead mb-0 text-left font-weight-bold">Hire: £{{ product.price }} / day</p>
+                                        {% if product.rating %}
+                                            <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                                        {% else %}
+                                            <small class="text-muted">No Rating</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                    {% if forloop.counter|divisibleby:1 %}
+                        <div class="col-12 d-sm-none mb-5">
+                            <hr>
+                        </div>
+                    {% endif %}                        
+                    {% if forloop.counter|divisibleby:2 %}
+                        <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
+                            <hr>
+                        </div>
+                    {% endif %}
+                    {% if forloop.counter|divisibleby:3 %}
+                        <div class="col-12 d-none d-lg-block d-xl-none mb-5">
+                            <hr>
+                        </div>
+                    {% endif %}
+                    {% if forloop.counter|divisibleby:4 %}
+                        <div class="col-12 d-none d-xl-block mb-5">
+                            <hr>
+                        </div>
+                    {% endif %}           
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+       </div>
    </div>
 {% endblock %}
