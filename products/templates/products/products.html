@@ -39,7 +39,7 @@ This is the products template for the website. It contains the header, footer an
                                 <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
                             </a>
                             {% else %}
-                            <a href="{% url 'product_detail' product.id %">
+                            <a href="{% url 'product_detail' product.id %}">
                                 <img class="card-img-top img-fluid" src="../../../media/placeholder.jpg" alt="{{ product.name }}">
                             </a>
                             {% endif %}

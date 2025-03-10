@@ -113,7 +113,7 @@ This is the base template for the website. It contains the header, footer and th
                 </li>
                    <!-- /. Shopping Cart -->
             </ul>
-            <form class="d-flex" method="GET" action="">
+            <form class="d-flex" method="GET" action="{% url 'products' %}">
               <input class="form-control me-2" type="search" placeholder="Search Our Site" aria-label="Search" name="q">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>            
