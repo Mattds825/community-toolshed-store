@@ -101,7 +101,7 @@ This is the base template for the website. It contains the header, footer and th
                 <!-- /. Account dropdown -->
                  <!--Shopping Cart -->
                 <li class="nav-item">
-                    <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="">
+                    <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="{% url 'view_cart' %}">
                         <div class="text-center d-flex gap-1">
                             <div><i class="fas fa-shopping-bag fa-lg"></i></div>
                             <p class="my-0">
