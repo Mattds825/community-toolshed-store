@@ -68,6 +68,8 @@ def all_products(request):
             if sortkey == 'name':
                 sortkey = 'lower_name'
                 products = products.annotate(lower_name=Lower('name'))
+            if sortkey == 'category':
+                sortkey == 'category__name'
             if 'direction' in request.GET:
                 direction = request.GET['direction']
                 if direction == 'desc':
@@ -119,11 +121,13 @@ def product_detail(request, product_id):
         product.price = product.tool.price
         product.rating = product.tool.rating
         product.description = product.tool.description
+        product.category = product.tool.category
     elif product.type == 1:
         product.image = product.party_item.image
         product.price = product.party_item.price
         product.rating = product.party_item.rating
         product.description = product.party_item.description
+        product.category = product.party_item.category
     
     context = {
         'product': product,
