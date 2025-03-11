@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib import messages
 from django.db.models import Q, F, Case, When, CharField, ImageField, IntegerField
+from django.db.models.functions import Lower
 from .models import Item, Tool, PartyItem, Category
 
 # Create your views here.
