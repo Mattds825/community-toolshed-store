@@ -35,12 +35,12 @@ def all_products(request):
                 direction = request.GET['direction']
                 if direction == 'desc':
                     sortkey = f'-{sortkey}'
-            products = products.order_by(sortkey)
+            products = products.order_by(sortkey) 
                 
         # check category parameter
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')            
-            products = products.filter(category__in=categories)                                                
+            products = products.filter(category__name__in=categories)                                                
             categories = Category.objects.filter(name__in=categories)            
         # check q parameter
         if 'q' in request.GET:
