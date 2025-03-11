@@ -23,9 +23,12 @@ class ItemAdmin(SummernoteModelAdmin):
     list_display = (
         'name',
         'type',
+        'category',        
+        'price',
+        'rating',     
     )
-    list_filter = ('name','type')
-    search_fields = ('name','type')
+    list_filter = ('name','type','category','price','rating')
+    search_fields = ('name','type','category')
 
 # admin.site.register(Tool)
 
