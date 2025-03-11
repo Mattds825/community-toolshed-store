@@ -11,9 +11,13 @@ def cart_contents(request):
     
     cart = request.session.get('cart', {})
     
+    print('cart items', cart.items())
+    
     # iterate through the cart items and get the item and quantity
     # then calculate the total and product and count and append the item to the cart_items list
     for item_id, quantity in cart.items():
+        print("in cart_contents")
+        print(item_id, quantity)
         item = get_object_or_404(Item, pk=item_id)
         total += quantity * item.price
         product_count += quantity
@@ -22,14 +26,18 @@ def cart_contents(request):
             'quantity': quantity,
             'item': item,
         })
-        
+    
+    if 'start_date' in request.session:
+        start_date = request.session['start_date']
+    if 'end_date' in request.session:
+        end_date = request.session['end_date']     
     
     context = {
         'cart_items': cart_items,
         'total': total,
-        'product_count': product_count,
+        'product_count': product_count,       
         'start_date': start_date,
-        'end_date': end_date,
+        'end_date': end_date, 
     }
     
     return context

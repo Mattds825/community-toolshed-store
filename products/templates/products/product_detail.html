@@ -18,7 +18,7 @@ This is the product detail template for the website. it contains the detail of a
 {% endblock %}
 
 {% block content %}
-    <div class="h-100 w-100 position-fixed bg-light">
+    <div class="page-overlay h-100 w-100 top-0 position-fixed bg-light"></div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
@@ -56,6 +56,24 @@ This is the product detail template for the website. it contains the detail of a
                         {% csrf_token %}
                         <div class="form-row">
                             <div class="col-12">
+                                <div class="card bg-white p-4 rounded-3 shadow-sm">
+                                    <h4 class="card-title text-center mb-4">Select Hire Dates</h4>
+                                    <div class="card-body">
+                                        <p>Note: Changing this will change the date for all items in cart</p>
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <label for="startDate" class="form-label fw-semibold">Start Date</label>
+                                                <input type="date" id="startDate" name="start_date" class="form-control rounded-2 border-secondary">
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="endDate" class="form-label fw-semibold">End Date</label>
+                                                <input type="date" id="endDate" name="end_date" class="form-control rounded-2 border-secondary">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
                                 <p class="mt-3"><strong>Quantity:</strong></p>
                                 <div class="form-group w-50">
                                     <div class="input-group">
@@ -79,5 +97,20 @@ This is the product detail template for the website. it contains the detail of a
             </div>
         </div>
     </div>
-</div>
+{% endblock %}
+
+{% block postload_js %}
+<!-- script to check if cart context has start_date and end date and set the inputs correspondingly  -->
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let startDate = document.getElementById('startDate');
+        let endDate = document.getElementById('endDate');
+        let cartStartDate = "{{ start_date }}";
+        let cartEndDate = "{{ end_date }}";
+        if (cartStartDate && cartEndDate) {
+            startDate.value = cartStartDate;
+            endDate.value = cartEndDate;
+        }
+    });
+</script>
 {% endblock %}

@@ -17,7 +17,17 @@ def add_to_cart(request, item_id):
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
     
+    start_date = request.POST.get('start_date')
+    end_date = request.POST.get('end_date')
+    
+    print("add to cart view")
+    
+    print(start_date, end_date)
+    
     cart = request.session.get('cart', {})
+    
+    # cart[start_date] = start_date
+    # cart[end_date] = end_date
     
     if item_id in list(cart.keys()):
         cart[item_id] += quantity
@@ -25,7 +35,10 @@ def add_to_cart(request, item_id):
         cart[item_id] = quantity
         
     request.session['cart'] = cart
+    request.session['start_date'] = start_date
+    request.session['end_date'] = end_date
     
     print(request.session['cart'])
+    print(redirect_url)
     
     return redirect(redirect_url)
