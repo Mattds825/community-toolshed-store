@@ -30,7 +30,31 @@ class ItemAdmin(SummernoteModelAdmin):
     list_filter = ('name','type','category','price','rating')
     search_fields = ('name','type','category')
 
-# admin.site.register(Tool)
+
+# Custom admin action to duplicate a Tool instance
+def duplicate_tool(modeladmin, request, queryset):
+    for tool in queryset:
+        print(tool.pk)
+        
+        # create a new instance of the Tool model
+        new_tool = Tool.objects.create(
+            name=tool.name,
+            category=tool.category,
+            description=tool.description,
+            price=tool.price,
+            rating=tool.rating,
+            image=tool.image,
+            keywords=tool.keywords,
+            serial_number=f"{tool.serial_number}_copy",
+            sku=tool.sku,
+            care_instructions=tool.care_instructions,
+        )
+       
+        new_tool.save() 
+        
+        # tool_copy.save()
+
+duplicate_tool.short_description = "Duplicate selected tools"
 
 @admin.register(Tool)
 class ToolAdmin(SummernoteModelAdmin):
@@ -49,6 +73,7 @@ class ToolAdmin(SummernoteModelAdmin):
     )
     list_filter = ('name','category','price','rating','is_written_off','needs_repair','is_available','created_at','updated_at')
     search_fields = ('name','category','serial_number')
+    actions = [duplicate_tool]
 
 # admin.site.register(PartyItem)
 

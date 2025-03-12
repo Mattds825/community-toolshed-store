@@ -35,6 +35,7 @@ class Category(models.Model):
 # this is used to determine if the item is a tool or a party item
 class Item(models.Model):    
     name = models.CharField(max_length=255)
+    sku = models.CharField(max_length=255)
     type = models.IntegerField(choices=ITEM_TYPE, default=0)
     category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL, related_name='items')
     description = models.TextField(null=True, blank=True)
@@ -55,7 +56,7 @@ class Item(models.Model):
 # this means that the item is a tool
 class Tool(Item):
     # image_url = models.URLField(max_length=1024, null=True, blank=True)    
-    serial_number = models.CharField(max_length=255)
+    serial_number = models.CharField(max_length=255, unique=True)    
     care_instructions = models.TextField(null=True, blank=True)
     is_written_off = models.BooleanField(default=False)
     needs_repair = models.BooleanField(default=False)

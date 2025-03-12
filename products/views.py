@@ -10,8 +10,14 @@ def all_products(request):
     """
     A view to show all products, including sorting and search queries
     """
+        
+    
     
     products = Item.objects.all()
+    
+    # items should be filtered to only have one of of each sku
+    # this is because we can have multiple tools
+    products = products.distinct('sku')
     
     query = None
     categories = None
@@ -69,10 +75,23 @@ def product_detail(request, product_id):
     A view to show individual product details
     """
     
+    # get amount of items with same sku
+    
     product = get_object_or_404(Item, pk=product_id)  
+    
+    available_amount = None
+    
+    # check if the product is a tool
+    # if it is a tool, get the amount of available tools
+    # if it is a party item, get the stock amount
+    if product.type == 0:
+        available_amount = Tool.objects.filter(sku=product.sku, is_available=True).count()
+    else:
+        available_amount = product.stock_amount
     
     context = {
         'product': product,
+        'available_amount': available_amount,
     }
     
     return render(request, 'products/product_detail.html', context)
