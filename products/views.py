@@ -80,6 +80,7 @@ def product_detail(request, product_id):
     product = get_object_or_404(Item, pk=product_id)  
     
     available_amount = None
+    cart_amount = None
     
     # check if the product is a tool
     # if it is a tool, get the amount of available tools
@@ -88,10 +89,19 @@ def product_detail(request, product_id):
         available_amount = Tool.objects.filter(sku=product.sku, is_available=True).count()
     else:
         available_amount = product.stock_amount
+        
+    cart = request.session.get('cart', {})
+    
+    if cart:
+        if product_id in cart:            
+            cart_amount = cart[product_id]
+            available_amount = available_amount - cart_amount    
+        
     
     context = {
         'product': product,
         'available_amount': available_amount,
+        'cart_amount': cart_amount,
     }
     
     return render(request, 'products/product_detail.html', context)

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from products.models import Item
 
 # Create your views here.
 
@@ -40,5 +41,14 @@ def add_to_cart(request, item_id):
     
     print(request.session['cart'])
     print(redirect_url)
+    
+    product = Item.objects.get(pk=item_id)
+    # check if the product is a tool, if it is this means there are multiple tools with the same sku
+    # so we need to redirect to the next available tool
+    if product.type == 0:
+        next_available_tool = Item.objects.filter(sku=product.sku, is_available=True).first()
+        redirect_url = f'/products/{next_available_tool.id}'
+
+        
     
     return redirect(redirect_url)
