@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib import messages
-from django.db.models import Q, F, Case, When, CharField, ImageField, IntegerField
+from django.db.models import Q, F, Case, When, CharField, ImageField, IntegerField, Count
 from django.db.models.functions import Lower
 from .models import Item, Tool, PartyItem, Category
 
@@ -17,14 +17,30 @@ def all_products(request):
     
     # items should be filtered to only have one of of each sku
     # this is because we can have multiple tools
-    products = products.distinct('sku')
+    # products = products.distinct('sku')
     
     query = None
     categories = None
     sort = None
     direction = None
     
+    sortkey = None
     
+    
+    # remove sku duplicates
+    filteredProducts = Item.objects.none()
+    sku_list = []
+    
+    print(products)
+    
+    for product in products:
+        print(product.sku)
+        if product.type == 0:
+            if product.sku not in sku_list:
+                sku_list.append(product.sku)
+                filteredProducts |= Item.objects.filter(id=product.id)
+            
+    products = filteredProducts                     
     
     # handle request to filter products by category
     if request.GET:
@@ -57,7 +73,19 @@ def all_products(request):
             
             queries = Q(name__icontains=query) | Q(description__icontains=query) | Q(keywords__icontains=query)
             products = products.filter(queries)
-                   
+                          
+    
+    #  # Apply distinct on SKU
+    # if sort:
+    #     products = products.order_by('sku', sortkey)
+    # else:
+    #     products = products.order_by('sku')
+    # products = products.distinct('sku')
+    
+    # remove all products that have duplicate skus and are of type tool
+    # products = products.filter(type=1).distinct('sku')
+    
+    # Annotate the queryset with a unique identifier for each SKU
         
     current_sorting = f'{sort}_{direction}' 
     

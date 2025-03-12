@@ -52,7 +52,15 @@ this template is the cart template for the website. It contains the cart items a
                                         <p class="my-0">${{ cart_item.item.price }}</p>
                                     </td>
                                     <td class="py-3 w-25">
-                                        <p class="my-0">{{ cart_item.quantity }}</p>
+
+                                        <form method="POST" >
+                                            {% csrf_token %}
+                                            <input type="number" name="quantity" value="{{ cart_item.quantity }}" min="1" class="form-control qty-control">
+                                            <div class="mt-2">
+                                                <button type="submit" name="update" class="d-none btn btn-primary btn-sm updateBtn">Update</button>
+                                                <button type="submit" name="remove" class="btn btn-danger btn-sm">Remove</button>
+                                            </div>
+                                        </form></div>
                                     </td>
                                     <td class="py-3">
                                         <p class="my-0">${{ cart_item.item.price }}</p>
@@ -101,4 +109,26 @@ this template is the cart template for the website. It contains the cart items a
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postload_js %}
+<!-- script to toggle the visibility of the formBtn bases on the qty-control input changing -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let qtyControls = document.querySelectorAll('.qty-control');
+        qtyControls.forEach(qtyControl => {
+            let initQty = Number(qtyControl.value);
+            console.log("init qty", initQty, qtyControl); 
+            qtyControl.addEventListener('change', function() {
+                let formBtn = this.closest('form').querySelector('.updateBtn');
+                console.log(qtyControl.value, initQty);
+                if (Number(qtyControl.value) !== initQty) {
+                    formBtn.classList.remove('d-none');
+                } else {
+                    formBtn.classList.add('d-none');
+                }                
+            });
+        });
+    });
+</script>
 {% endblock %}
