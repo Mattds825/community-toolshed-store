@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse, HttpResponse
+from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from django.contrib import messages
 from products.models import Item, Tool, PartyItem
 
@@ -16,7 +16,7 @@ def add_to_cart(request, item_id):
     Add a quantity of the specified product to the shopping cart
     """
     
-    item = Item.objects.get(pk=item_id)
+    item = get_object_or_404(Item, pk=item_id)
     
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
@@ -46,7 +46,7 @@ def add_to_cart(request, item_id):
     print(request.session['cart'])
     print(redirect_url)
     
-    product = Item.objects.get(pk=item_id)
+    product = get_object_or_404(Item,  pk=item_id)
     # check if the product is a tool, if it is this means there are multiple tools with the same sku
     # so we need to redirect to the next available tool
     if product.type == 0:
@@ -69,12 +69,16 @@ def adjust_cart(request, item_id):
     
     cart = request.session.get('cart', {})
     
+    item = get_object_or_404(Item, pk=item_id)
+    
     # set the cart item to the new quantity
     # remove the item from the cart if the quantity is 0
     if quantity > 0:
         cart[item_id] = quantity
+        messages.success(request, f'Updated {item.name} quantity to {quantity}')
     else:
         cart.pop(item_id)
+        messages.success(request, f'Removed {item.name} from your cart')
     
     request.session['cart'] = cart
     
@@ -94,6 +98,11 @@ def remove_from_cart(request, item_id):
         
         request.session['cart'] = cart
         
+        item = get_object_or_404(Item, pk=item_id)
+        
+        messages.success(request, f'removed {item.name} from cart')
+        
         return HttpResponse(status=200)
     except Exception as e:
+        messages.error(request, f'Error removing item: {e}')
         return HttpResponse(status=500)
