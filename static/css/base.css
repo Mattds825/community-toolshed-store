@@ -28,3 +28,20 @@ body {
 .btt-button:hover {
     background-color: #f1f1f1;
 }
+
+/* -------- Bootstrap Toasts */
+
+.message-container {    
+    position: fixed;
+    top: 72px;
+    right: 15px;
+    z-index: 99999999;
+}
+
+.custom-toast {
+    overflow: visible;
+}
+
+.toast-capper {
+    height: 2px;
+}

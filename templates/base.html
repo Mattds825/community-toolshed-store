@@ -132,7 +132,21 @@ This is the base template for the website. It contains the header, footer and th
     <!-- /. Items Nav Bar -->
 
     {% if messages %}
-    <div class="message-container"></div>
+      <div class="message-container">
+        {% for message in messages %}
+          {% with message.level as level %}
+            {% if level == 40 %}
+              {% include 'includes/toasts/toast_error.html' %}
+            {% elif level == 30 %}
+              {% include 'includes/toasts/toast_warning.html' %}
+            {% elif level == 25 %}
+              {% include 'includes/toasts/toast_success.html' %}
+            {% else %}
+              {% include 'includes/toasts/toast_info.html' %}
+            {% endif %}
+          {% endwith %}
+        {% endfor %}
+      </div>
     {% endif %}
 
     {% block page_header %}
@@ -142,6 +156,13 @@ This is the base template for the website. It contains the header, footer and th
     {% endblock %}
 
     {% block postload_js %}
+    <!-- script to show bootstrap toasts -->
+     <script type="text/javascript">
+      $(document).ready(function() {
+        $('.toast').addClass('show');
+        $('.toast').toast('show');
+      });
+     </script>
     {% endblock %}
   </body>
 </html>
