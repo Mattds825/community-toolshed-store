@@ -10,6 +10,8 @@ this template is the cart template for the website. It contains the cart items a
 
 {% load static %}
 
+{% load cart_tools  %}
+
 {% block page_header %}
 <div class="container header-container">
     <div class="row">
@@ -53,17 +55,17 @@ this template is the cart template for the website. It contains the cart items a
                                     </td>
                                     <td class="py-3 w-25">
 
-                                        <form method="POST" >
+                                        <form method="POST" action="{% url 'adjust_cart' cart_item.item_id %}">
                                             {% csrf_token %}
-                                            <input type="number" name="quantity" value="{{ cart_item.quantity }}" min="1" class="form-control qty-control">
+                                            <input type="number" name="quantity" value="{{ cart_item.quantity }}" min="1" max="{{ cart_item.available_amount }}"  class="form-control qty-control">
                                             <div class="mt-2">
                                                 <button type="submit" name="update" class="d-none btn btn-primary btn-sm updateBtn">Update</button>
-                                                <button type="submit" name="remove" class="btn btn-danger btn-sm">Remove</button>
+                                                <a name="remove" id="remove_{{ cart_item.item_id }}" class="btn btn-danger btn-sm removeBtn">Remove</a>
                                             </div>
                                         </form></div>
                                     </td>
                                     <td class="py-3">
-                                        <p class="my-0">${{ cart_item.item.price }}</p>
+                                        <p class="my-0">£{{ cart_item.item.price | calc_subtotal:cart_item.quantity }}</p>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -118,10 +120,20 @@ this template is the cart template for the website. It contains the cart items a
         let qtyControls = document.querySelectorAll('.qty-control');
         qtyControls.forEach(qtyControl => {
             let initQty = Number(qtyControl.value);
-            console.log("init qty", initQty, qtyControl); 
+            console.log("init qty", initQty, qtyControl);
+                        
+            qtyControl.addEventListener('click', function() {
+                // check if the quantity is the same as the max quantity
+                if (Number(qtyControl.value) === Number(qtyControl.getAttribute('max'))) { 
+                    console.log('max qty reached');                   
+                    alert('You have reached the maximum quantity for this item');                    
+                    return;
+                }
+            });
+            
             qtyControl.addEventListener('change', function() {
-                let formBtn = this.closest('form').querySelector('.updateBtn');
-                console.log(qtyControl.value, initQty);
+                let formBtn = this.closest('form').querySelector('.updateBtn');                                
+
                 if (Number(qtyControl.value) !== initQty) {
                     formBtn.classList.remove('d-none');
                 } else {
@@ -130,5 +142,26 @@ this template is the cart template for the website. It contains the cart items a
             });
         });
     });
+</script>
+
+<!-- Script to update or remove item from cart -->
+<script>
+    // Update quantity on click
+    $('.updateBtn').click(function(e) {
+        var form = $(this).prev('.update-form');
+        form.submit();
+    })
+
+    // Remove item and reload on click
+    $('.removeBtn').click(function(e) {
+        var csrfToken = "{{ csrf_token }}";
+        var itemId = $(this).attr('id').split('remove_')[1];        
+        var url = `/cart/remove/${itemId}/`;
+        var data = {'csrfmiddlewaretoken': csrfToken};
+        $.post(url, data)
+         .done(function() {
+             location.reload();
+         });
+    })
 </script>
 {% endblock %}

@@ -10,9 +10,7 @@ def all_products(request):
     """
     A view to show all products, including sorting and search queries
     """
-        
-    
-    
+
     products = Item.objects.all()
     
     # items should be filtered to only have one of of each sku
@@ -30,8 +28,6 @@ def all_products(request):
     # remove sku duplicates
     filteredProducts = Item.objects.none()
     sku_list = []
-    
-    print(products)
     
     for product in products:
         print(product.sku)

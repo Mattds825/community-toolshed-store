@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from products.models import Item
+from products.models import Item, Tool
 
 def cart_contents(request):
     
@@ -21,10 +21,18 @@ def cart_contents(request):
         item = get_object_or_404(Item, pk=item_id)
         total += quantity * item.price
         product_count += quantity
+        
+        available_amount = None
+        if item.type == 0:
+            available_amount = Tool.objects.filter(sku=item.sku, is_available=True).count()
+        else:
+            available_amount[item_id] = item.stock_amount
+        
         cart_items.append({
             'item_id': item_id,
             'quantity': quantity,
             'item': item,
+            'available_amount': available_amount,
         })
     
     if 'start_date' in request.session:
