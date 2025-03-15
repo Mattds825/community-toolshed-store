@@ -1,0 +1,98 @@
+<!-- 
+created by Matthew G Da Silva 15/03/2025 
+
+It is built around the base template of the CodeInsitute Boutique Ado project checkout template.
+
+this template is the cart template for the website. It contains the cart items and the total cost of the items in the cart.
+-->
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load cart_tools  %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="page-overlay h-100 w-100 top-0 position-fixed bg-light"></div>
+    <div class="container mb-2">
+        <div class="row">
+            <div class="col">
+                <h2 class="my-2">Checkout</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-6 order-lg-last mb-5">
+                <p class="text-muted">Order Summary ({{ product_count }})</p>
+                <div class="row">
+                    <div class="col-7 offset-2">
+                        <p class="mb-1 mt-0 small text-muted">Item</p>
+                    </div>
+                    <div class="col-3 text-right">
+                        <p class="mb-1 mt-0 small text-muted">Subtotal</p>
+                    </div>
+                </div>
+                {% for cart_item in cart_items %}
+                    <div class="row">
+                        <div class="col-2 mb-1">
+                            <a href="{% url 'product_detail' cart_item.item.id %}">
+                                {% if cart_item.item.image %}
+                                    <img class="w-100" src="{{ cart_item.item.image.url }}" alt="{{ item.name }}">
+                                {% else %}
+                                    <img class="w-100" src="{{ MEDIA_URL }}placeholder.jpg" alt="{{ item.name }}">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="col-7">
+                            <p class="my-0"><strong>{{ cart_item.item.name }}</strong></p>                            
+                            <p class="my-0 small text-muted">Qty: {{ cart_item.quantity }}</p>
+                        </div>
+                        <div class="col-3 text-right">
+                            <p class="my-0 small text-muted">${{ cart_item.item.price | calc_subtotal:cart_item.quantity }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+                <hr class="my-0">
+                <div class="row text-black text-right">
+                    <div class="col-12 offset-2">
+                        <p class="my-0">Order Total: £{{ total | floatformat:2 }}</p>                        
+                    </div>                    
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                {% if user.is_authenticated %}
+                    <p>You are logged in</p>
+                    <!-- Add user details in non editable for below -->
+                    <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary rounded-0 btn-lg">
+                        <span class="icon">
+                            <i class="fas fa-chevron-left"></i>
+                        </span>
+                        <span class="text-uppercase">Adjust Cart</span>
+                    </a>
+                    <a href="{% url 'checkout' %}" class="btn btn-success rounded-0 btn-lg">
+                        <span class="text-uppercase">Complete Order</span>
+                        <span class="icon">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </a>
+                    <p class="small text-danger my-3">
+                        <span class="icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </span>
+                        <span>Your card will be charged <strong>${{ total|floatformat:2 }}</strong></span>
+                    </p>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+                    <a href="{% url 'signup' %}" class="btn btn-secondary">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

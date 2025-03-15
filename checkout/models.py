@@ -61,8 +61,7 @@ class OrderItem(models.Model):
         and update the order total.        
         """
         self.item_total = self.item.price * self.quantity
-        super().save(*args, **kwargs)
-        self.order.update_total()
+        super().save(*args, **kwargs)        
         
     def __str__(self):
         return f'{self.item.name} on order {self.order.order_number}'
