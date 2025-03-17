@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% load crispy_forms_tags %}
+
 <!-- 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
@@ -23,4 +26,19 @@
                 <hr>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <p class="text-muted">Default Delivery Information</p>
+                <form class="mt-3" enctype="multipart/form-data" action="{% url 'profile' %}" method="POST" id="profile-update-form">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-primary rounded-0 text-uppercase float-right mt-3">Update Information</button>
+                </form>
+            </div>
+            <div class="col-12 col-lg-6">
+                <p class="text-muted">Order History</p>
+                {{ orders }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -90,7 +90,7 @@ This is the base template for the website. It contains the header, footer and th
                             <li><a href="" class="dropdown-item">Product Management</a></li>                    
                             <li><hr class="dropdown-divider"></li>
                             {% endif %}
-                            <li><a href="" class="dropdown-item">My Profile</a></li>
+                            <li><a href="{% url 'profile' %}" class="dropdown-item">My Profile</a></li>
                             <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
                             {% else %}
                             <li><a href="{% url 'account_signup' %}" class="dropdown-item">Register</a></li>
