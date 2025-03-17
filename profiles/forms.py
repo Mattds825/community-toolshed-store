@@ -5,7 +5,7 @@ from django_countries.widgets import CountrySelectWidget
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        exclude = ('user',)
+        exclude = ('user','email_address')
         widgets = {
             'country': CountrySelectWidget(layout='{widget}', attrs={'class': 'border-black rounded-0 profile-form-input'}),
         }
@@ -17,6 +17,8 @@ class UserProfileForm(forms.ModelForm):
         """
         super().__init__(*args, **kwargs)
         placeholders = {
+            'email_address': 'Email Address',
+            'full_name': 'Full Name',
             'phone_number': 'Phone Number',
             'postcode': 'Postal Code',
             'town_or_city': 'Town or City',

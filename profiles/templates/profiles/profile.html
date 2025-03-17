@@ -28,6 +28,8 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-6">
+                <p>Email Address: <strong>{{ profile.email_address }}</strong></p>
+                <p>username: <strong>{{ profile }}</strong></p>
                 <p class="text-muted">Default Delivery Information</p>
                 <form class="mt-3" enctype="multipart/form-data" action="{% url 'profile' %}" method="POST" id="profile-update-form">
                     {% csrf_token %}
