@@ -72,7 +72,7 @@ this template is the cart template for the website. It contains the cart items a
                 {% if user.is_authenticated %}
                     <p>You are logged in as {{ profile }}</p>
                     <p>Your details can be edited in your <a href="{% url 'profile' %}">Profile Page</a></p>
-                    <form action=""  method="POST" id="payment-form">
+                    <form action="{% url 'checkout' %}"  method="POST" id="payment-form">
                         {% csrf_token %}
                         {{ form|crispy }}
                         <fieldset class="px-3">
@@ -83,26 +83,26 @@ this template is the cart template for the website. It contains the cart items a
                             <!-- Used to display form errors -->
                             <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
                         </fieldset>    
+                        <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary rounded-0 btn-lg">
+                            <span class="icon">
+                                <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="text-uppercase">Adjust Cart</span>
+                        </a>
+                        <button id="submit-btn" class="btn btn-success rounded-0 btn-lg">
+                            <span class="text-uppercase">Complete Order</span>
+                            <span class="icon">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </button>
+                        <p class="small text-danger my-3">
+                            <span class="icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </span>
+                            <span>Your card will be charged <strong>${{ total|floatformat:2 }}</strong></span>
+                        </p>
                     </form>
-                    <!-- Add user details in non editable for below -->
-                    <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary rounded-0 btn-lg">
-                        <span class="icon">
-                            <i class="fas fa-chevron-left"></i>
-                        </span>
-                        <span class="text-uppercase">Adjust Cart</span>
-                    </a>
-                    <a href="{% url 'checkout' %}" class="btn btn-success rounded-0 btn-lg">
-                        <span class="text-uppercase">Complete Order</span>
-                        <span class="icon">
-                            <i class="fas fa-lock"></i>
-                        </span>
-                    </a>
-                    <p class="small text-danger my-3">
-                        <span class="icon">
-                            <i class="fas fa-exclamation-circle"></i>
-                        </span>
-                        <span>Your card will be charged <strong>${{ total|floatformat:2 }}</strong></span>
-                    </p>
+                    <!-- Add user details in non editable for below -->                    
                 {% else %}
                     <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
                     <a href="{% url 'signup' %}" class="btn btn-secondary">Sign Up</a>
