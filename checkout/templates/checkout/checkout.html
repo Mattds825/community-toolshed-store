@@ -10,6 +10,8 @@ this template is the cart template for the website. It contains the cart items a
 
 {% load static %}
 
+{% load crispy_forms_tags %}
+
 {% load cart_tools  %}
 
 {% block page_header %}
@@ -68,7 +70,12 @@ this template is the cart template for the website. It contains the cart items a
             </div>
             <div class="col-12 col-lg-6">
                 {% if user.is_authenticated %}
-                    <p>You are logged in</p>
+                    <p>You are logged in as {{ profile }}</p>
+                    <p>Your details can be edited in your <a href="{% url 'profile' %}">Profile Page</a></p>
+                    <form action=""  method="POST" id="payment-form">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                    </form>
                     <!-- Add user details in non editable for below -->
                     <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary rounded-0 btn-lg">
                         <span class="icon">
