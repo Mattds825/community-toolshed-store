@@ -15,6 +15,10 @@ import stripe
 
 
 def checkout(request):
+    """
+    A view to return the checkout page
+    handle the payment form submission
+    """
     
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -66,7 +70,12 @@ def checkout(request):
     else: 
         cart = request.session.get('cart', {})
         
-        profile = get_object_or_404(UserProfile, user=request.user)
+        profile = None
+        
+        if request.user.is_authenticated:
+            profile = get_object_or_404(UserProfile, user=request.user)
+            
+        
         form = PaymentForm(instance=profile)
         
         start_date = request.session.get('start_date')

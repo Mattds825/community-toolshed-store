@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-y(ma!w^nr*4034#8=8(_vqr^ph0wb$s*ix7^kw9g5chn5cdi(1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", '.herokuapp.com']
+ALLOWED_HOSTS = ["127.0.0.1", 'localhost', '.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.127.0.0.1",
@@ -193,3 +193,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STRIPE_CURRENCY = 'gbp'
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
