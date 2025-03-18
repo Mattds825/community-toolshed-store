@@ -14,6 +14,10 @@ this template is the cart template for the website. It contains the cart items a
 
 {% load cart_tools  %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
 {% block page_header %}
 <div class="container header-container">
     <div class="row">
@@ -109,6 +113,14 @@ this template is the cart template for the website. It contains the cart items a
                 {% endif %}
             </div>
         </div>
+    </div>
+    <div id="loading-overlay">
+        <h1 class="loading-spinner text-center">
+            <span class="icon">
+                <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+                <p class="pt-3 text-center">loading ...</p>
+            </span>
+        </h1>
     </div>
 {% endblock %}
 

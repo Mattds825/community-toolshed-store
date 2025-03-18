@@ -83,6 +83,21 @@ A full list of the user requirements can be seen in the [TESTING.md file](/TESTI
 
 Deployment is done through Heruko
 
+## How to Use
+
+### Stripe Card Test Numbers
+
+You can use these card numbers at the checkout to test stripe payment integration
+
+| CARD NUMBER |	SCENARIO | HOW TO TEST |
+| --- | --- | ---|
+| 4242424242424242 | The card payment succeeds and doesn’t require authentication. | Fill out the credit card form using the credit card number with any expiration, CVC, and postal code. |
+| 4000002500003155 | The card payment requires authentication. | Fill out the credit card form using the credit card number with any expiration, CVC, and postal code. |
+| 4000000000009995 | The card is declined with a decline code like insufficient_funds. | Fill out the credit card form using the credit card number with any expiration, CVC, and postal code. |
+| 6205500000000000004 |	The UnionPay card has a variable length of 13-19 digits. |	Fill out the credit card form using the credit card number with any expiration, CVC, and postal code.|
+
+this information if from the stripe [docs](https://docs.stripe.com/payments/accept-a-payment?platform=web&ui=elements#enable-checkout-link)
+
 ## Testing
 
 ## Future Considerations
@@ -100,6 +115,7 @@ Deployment is done through Heruko
 - django SummerNote - styling django admin panel
 - django crispy forms - for handling and creating forms
 - [Dbdiagram.io](https://dbdiagram.io/d) - used to create database schema
+- [stripe](https://stripe.com) - used to manage payments
 
 ### Resources
 
@@ -107,3 +123,5 @@ Deployment is done through Heruko
     - home page image by ClickerHappy: https://www.pexels.com/photo/lawn-mower-vehicle-on-grass-589/
 - the [code institute walkthrough project](https://github.com/Code-Institute-Solutions/boutique_ado_v1_sourcecode/tree/main/) was used as a starting point for this project
 and the tutorial lessons where followed in order to create this project 
+- [strip docs](https://docs.stripe.com/)
+- [css.glass](https://css.glass) - for glassmorphism effect
