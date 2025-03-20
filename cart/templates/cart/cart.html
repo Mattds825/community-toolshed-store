@@ -37,7 +37,7 @@ this template is the cart template for the website. It contains the cart items a
                                 <tr>
                                     <th scope="col">Product Info</th>
                                     <th scope="col"></th>
-                                    <th scope="col">Price</th>
+                                    <th scope="col">Price (per day)</th>
                                     <th scope="col">Qty</th>
                                     <th scope="col">Subtotal</th>
                                 </tr>
@@ -65,13 +65,13 @@ this template is the cart template for the website. It contains the cart items a
                                         </form></div>
                                     </td>
                                     <td class="py-3">
-                                        <p class="my-0">£{{ cart_item.item.price | calc_subtotal:cart_item.quantity }}</p>
+                                        <p class="my-0">£{% calc_subtotal cart_item.item.price cart_item.quantity days_amount %}</p>                                        
                                     </td>
                                 </tr>
                             {% endfor %}
                             <tr>
                                 <td class="pt-5 text-right">
-                                    <h5>Selected Hire Dates</h5>
+                                    <h5>Selected Hire Dates ({{ days_amount }} days)</h5>
                                     <p>Start Date: {{ start_date }}</p>
                                     <p>End Date: {{ end_date }}</p>
                                 </td>

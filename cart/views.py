@@ -43,8 +43,7 @@ def add_to_cart(request, item_id):
     request.session['start_date'] = start_date
     request.session['end_date'] = end_date
     
-    print(request.session['cart'])
-    print(redirect_url)
+    print(request.session['cart'])      
     
     product = get_object_or_404(Item,  pk=item_id)
     # check if the product is a tool, if it is this means there are multiple tools with the same sku

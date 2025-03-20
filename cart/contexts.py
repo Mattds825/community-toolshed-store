@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from products.models import Item, Tool
+from datetime import datetime
 
 def cart_contents(request):
     
@@ -8,18 +9,28 @@ def cart_contents(request):
     product_count = 0
     start_date = None
     end_date = None
+    days_amount = 0
     
     cart = request.session.get('cart', {})
     
-    print('cart items', cart.items())
+    start_date = request.session.get('start_date', datetime.now().strftime('%Y-%m-%d'))
+    end_date = request.session.get('end_date', datetime.now().strftime('%Y-%m-%d'))
+    
+    start_date_dt = datetime.strptime(start_date, '%Y-%m-%d')
+    end_date_dt = datetime.strptime(end_date, '%Y-%m-%d')
+    
+    days_amount = (end_date_dt - start_date_dt).days
     
     # iterate through the cart items and get the item and quantity
-    # then calculate the total and product and count and append the item to the cart_items list
+    # then calculate the total (multiplied by amount of days) and product and count and append the item to the cart_items list
     for item_id, quantity in cart.items():
-        print("in cart_contents")
-        print(item_id, quantity)
+        
+        # calculate the amount of days in the hire        
+        
+        print('days amount', days_amount)
+        
         item = get_object_or_404(Item, pk=item_id)
-        total += quantity * item.price
+        total += (quantity * item.price) * days_amount
         product_count += quantity
         
         available_amount = None
@@ -46,6 +57,7 @@ def cart_contents(request):
         'product_count': product_count,       
         'start_date': start_date,
         'end_date': end_date, 
+        'days_amount': days_amount,
     }
     
     return context
