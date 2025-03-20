@@ -13,7 +13,7 @@ class OrderItemAdminInline(admin.TabularInline):
 @admin.register(Order)
 class OrderAdmin(SummernoteModelAdmin):    
     inlines = (OrderItemAdminInline,)
-    readonly_fields = ('order_number', 'date', 'order_total', 'payment_status', 'start_date', 'end_date')
+    readonly_fields = ('order_number', 'date', 'order_total', 'payment_status', 'start_date', 'end_date', 'original_cart', 'stripe_pid')
     list_display = (
         'order_number',
         'date',

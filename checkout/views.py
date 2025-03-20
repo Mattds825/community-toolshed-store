@@ -24,6 +24,8 @@ def cache_checkout_data(request):
         stripe.PaymentIntent.modify(pid, metadata={
             'cart': json.dumps(request.session.get('cart', {})),
             'username': request.user,
+            'start_date': request.session.get('start_date'),
+            'end_date': request.session.get('end_date'),
         })
         return HttpResponse(status=200)
     except Exception as e:
@@ -56,10 +58,13 @@ def checkout(request):
         order_form = PaymentForm(form_data)
         if order_form.is_valid(): 
             # order = order_form.save()
+            pid = request.POST.get('client_secret').split('_secret')[0]
             order = Order(
                 user_profile=UserProfile.objects.get(user=request.user),
                 start_date=request.session.get('start_date'),
-                end_date=request.session.get('end_date'),
+                end_date=request.session.get('end_date'),                
+                stripe_pid=pid,
+                original_cart=json.dumps(cart),
             )
             order.save()
             for item_id, item_data in cart.items():
@@ -141,8 +146,10 @@ def checkout_success(request, order_number):
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.user_profile.email_address}.')
     
-    if 'cart' in request.session:
+    if 'cart' and 'start_date' and 'end_date' in request.session:
         del request.session['cart']
+        del request.session['start_date']
+        del request.session['end_date']
         
     template = 'checkout/checkout_success.html'
     context = {

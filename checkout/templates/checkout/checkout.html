@@ -86,6 +86,8 @@ this template is the cart template for the website. It contains the cart items a
     
                             <!-- Used to display form errors -->
                             <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                            <!-- Pass the client secret so we can get the payment intent id -->
+                            <input type="hidden" value="{{  client_secret }}" name="client_secret">
                         </fieldset>    
                         <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary rounded-0 btn-lg">
                             <span class="icon">

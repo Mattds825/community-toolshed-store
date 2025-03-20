@@ -27,6 +27,8 @@ class Order(models.Model):
     end_date = models.DateField(null=False)
     order_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
     payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS, default='pending')
+    original_cart = models.TextField(null=False, blank=False, default='')
+    stripe_pid = models.CharField(max_length=254, null=False, blank=False, default='')
     
     def _generate_order_number(self):
         return uuid.uuid4().hex.upper()
