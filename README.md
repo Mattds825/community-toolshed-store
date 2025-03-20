@@ -65,7 +65,39 @@ A full list of the user requirements can be seen in the [TESTING.md file](/TESTI
 
 ### Django App Structure 
 
+#### community_toolshed Main Project
+
+here is where is main urls and the settings file lives
+
+#### homepage App
+
+#### profiles App
+
+#### cart App
+
+#### checkout App 
+
 ### Database Design 
+
+#### Item Model
+
+#### Category Model
+
+#### Tool Model
+
+Subclass of Item Model
+
+#### PartyItem Model
+
+Subclass of Item Model
+
+#### Order Model
+
+#### OrderItem Model
+
+#### UserProfile Model
+
+#### MaintenanceTicket Model
 
 ## UI/UX
 
@@ -73,9 +105,35 @@ A full list of the user requirements can be seen in the [TESTING.md file](/TESTI
 
 ### Pages
 
+#### Sign In Page
+
+#### Sign Up Page
+
+#### Logout Page
+
+#### Home Page
+
+#### Products Page
+
+#### Individual Item Page
+
+#### Cart Page
+
+#### Checkout (Payment) Page
+
+#### Checkout (Success) Page
+
 ### Structure and Navigation 
 
+### Colors 
+
+using default bootstrap colors to ensure consistency
+
 ### Accessibility 
+
+#### Hover on Buttons
+
+#### Confirmation, Information and Error Messages
 
 ### Defensive Design 
 
@@ -123,5 +181,5 @@ this information if from the stripe [docs](https://docs.stripe.com/payments/acce
     - home page image by ClickerHappy: https://www.pexels.com/photo/lawn-mower-vehicle-on-grass-589/
 - the [code institute walkthrough project](https://github.com/Code-Institute-Solutions/boutique_ado_v1_sourcecode/tree/main/) was used as a starting point for this project
 and the tutorial lessons where followed in order to create this project 
-- [strip docs](https://docs.stripe.com/)
+- [stripe docs](https://docs.stripe.com/)
 - [css.glass](https://css.glass) - for glassmorphism effect

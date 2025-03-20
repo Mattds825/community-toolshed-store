@@ -20,8 +20,9 @@ class OrderAdmin(SummernoteModelAdmin):
         'start_date',
         'end_date',
         'order_total',
-        'payment_status',     
+        'payment_status',
+        'user_profile',     
     )
-    list_filter = ('order_number','date','start_date','end_date','order_total','payment_status')
+    list_filter = ('date','start_date','end_date','payment_status', 'user_profile')
     search_fields = ('order_number','date','start_date','end_date')
     ordering = ('-date',)

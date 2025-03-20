@@ -142,18 +142,42 @@ def checkout_success(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)
     # profile = get_object_or_404(UserProfile, user=order.user_profile)
     
-    messages.success(request, f'Order successfully processed! \
-        Your order number is {order_number}. A confirmation \
-        email will be sent to {order.user_profile.email_address}.')
-    
-    if 'cart' and 'start_date' and 'end_date' in request.session:
-        del request.session['cart']
-        del request.session['start_date']
-        del request.session['end_date']
+    if request.method == 'POST':
+        print('POST request')
+        print(request.POST)
+        
+        # get form data from the request
+        status_data = {}
+        for key, value in request.POST.items():
+            if key.startswith('status_'):
+                # Extract the ID from the key (e.g., 'status_9' -> 9)
+                item_id = key.split('_')[1]
+                orderItem = OrderItem.objects.get(id=item_id)
+                orderItem.status = value
+                orderItem.save()                
+
+        print(status_data)  # Debugging: Print the extracted data
+        
+        context = {
+            'order': order,
+            'from_profile': True,
+        }
+        
+        
+    else:
+        messages.success(request, f'Order successfully processed! \
+            Your order number is {order_number}. A confirmation \
+            email will be sent to {order.user_profile.email_address}.')
+        
+        if 'cart' and 'start_date' and 'end_date' in request.session:
+            del request.session['cart']
+            del request.session['start_date']
+            del request.session['end_date']
+            
+        context = {
+            'order': order,
+        }
         
     template = 'checkout/checkout_success.html'
-    context = {
-        'order': order,
-    }
     
     return render(request, template, context)

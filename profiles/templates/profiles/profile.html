@@ -39,7 +39,56 @@
             </div>
             <div class="col-12 col-lg-6">
                 <p class="text-muted">Order History</p>
-                {{ orders }}
+                <div class="card text-start">                    
+                    <div class="card-body">
+                        <h4 class="card-title">Guide</h4>
+                        <ul>
+                            <li><span class="text-info">Reserved:</span> Item is reserved an payed for but not picked up</li>
+                            <li><span class="text-warning">Active:</span> Item is in active hire, <strong>remember to return to store</strong></li>
+                            <li><span class="text-secondary">Returned:</span> Item has been returned to store</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="table-responsive max-height-400 overflow-y-auto">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Order Number</th>
+                                <th>Order Date</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders|dictsortreversed:"date" %}
+                                <tr>
+                                    <td><a href="{% url 'order_history' order.order_number %}" title="{{ order.order_number }}">
+                                        {{ order.order_number|truncatechars:8 }}
+                                    </a></td>
+                                    <td>{{ order.date }}</td>
+                                    <td>{{ order.start_date }}</td>
+                                    <td>{{ order.end_date }}</td>
+                                    <td>
+                                        <ul class="list-unstyled">
+                                            {% for order_item in order.order_items.all %}
+                                                <li>
+                                                    <p>
+                                                        <span class="{% if order_item.status == 'reserved' %}text-info{% elif order_item.status == 'active' %}text-warning{% else %}text-secondary{% endif %}">
+                                                            {{ order_item.item.name }}</span> x {{ order_item.quantity }}
+                                                    </p><br>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                    <td>£{{ order.order_total }}</td>
+                                </tr>                                
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

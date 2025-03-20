@@ -150,10 +150,54 @@ It is built around the base template of the CodeInsitute Boutique Ado project ch
         </div>
         <div class="row">            
             <div class="col-12 col-lg-6">
-                <a href="{% url 'profile' %}" class="btn btn-outline-secondary">View Profile</a>
+                <a href="{% url 'profile' %}" class="btn btn-outline-secondary">{% if from_profile %}Return to Profile{% else %}View Profile{% endif %}</a>
                 <a href="{% url 'products' %}" class="btn btn-primary">Browse More Products</a>
             </div>
         </div>
+
+        <!-- Section for testing how the flow of the item status works -->
+        {% if from_profile %}
+            <hr>
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <p><strong>For testing purposes</strong></p>
+                    <p>Set the order item status for each item.<br><small class="text-muted">would normally be done by an employee in store</small></p>
+                    
+                    <form method="POST" action="{% url 'checkout_success' order.order_number%}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for line_item in order.order_items.all %}
+                                        <tr>
+                                            <td>{{ line_item.item.name }}</td>
+                                            <td>
+                                                <div class="form-group">                                                
+                                                    <select class="form-control" name="status_{{ line_item.id }}" id="status_{{ line_item.item.id }}">
+                                                        <option value="reserved" {% if line_item.status == 'reserved' %}selected{% endif %}>Reserved</option>
+                                                        <option value="active" {% if line_item.status == 'active' %}selected{% endif %}>Active</option>
+                                                        <option value="returned" {% if line_item.status == 'returned' %}selected{% endif %}>Returned</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>                          
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn btn-primary">Update Status</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
