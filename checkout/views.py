@@ -118,8 +118,7 @@ def checkout(request):
     
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. Did you forget to set it in your environment?')
-    
-    print(intent)
+        
     
     template = 'checkout/checkout.html'
     context = {
@@ -138,13 +137,10 @@ def checkout_success(request, order_number):
     Handle successful checkouts
     """
     
-    save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
     # profile = get_object_or_404(UserProfile, user=order.user_profile)
     
-    if request.method == 'POST':
-        print('POST request')
-        print(request.POST)
+    if request.method == 'POST':        
         
         # get form data from the request
         status_data = {}
@@ -154,9 +150,7 @@ def checkout_success(request, order_number):
                 item_id = key.split('_')[1]
                 orderItem = OrderItem.objects.get(id=item_id)
                 orderItem.status = value
-                orderItem.save()                
-
-        print(status_data)  # Debugging: Print the extracted data
+                orderItem.save()                        
         
         context = {
             'order': order,

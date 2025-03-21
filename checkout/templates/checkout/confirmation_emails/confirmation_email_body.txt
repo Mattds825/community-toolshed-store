@@ -1,0 +1,25 @@
+Hello  {{ order.profile.full_name }}!
+
+This is a confirmation of your order at Community Toolshed. Your Order information is below:
+
+Order Number: {{ order.order_number }}
+Total: {{ order.order_total }}
+
+Hire Dates:
+
+Start Date: {{ order.start_date }}
+End Date: {{ order.end_date }}
+
+Remember to pick up your items at the store.
+
+Our address is:
+
+{{ store_address }}
+
+If you have any further questions, feel free to email us at {{ store_contact_email }} or call {{ store_phone_number }}
+
+Thank you for your order
+
+Sincerely,
+
+Community Toolshed

@@ -194,3 +194,6 @@ STRIPE_CURRENCY = 'gbp'
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
 STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
+DEFAULT_FROM_EMAIL = 'communitytoolshed@example.com'
+STORE_ADDRESS = '123 Test Street, Test Street, West Sussex, AB12 3CD, UK'
+STORE_PHONE_NUMBER = '+44 123 456 7890'

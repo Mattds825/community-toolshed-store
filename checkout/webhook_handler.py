@@ -5,6 +5,9 @@
 import json
 import time
 from django.http import HttpResponse
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.conf import settings
 
 from .models import Order, OrderItem
 from profiles.models import UserProfile
@@ -19,6 +22,27 @@ class StripeWH_Handler:
     
     def __init__(self, request):
         self.request = request  
+    
+    def _send_confirmation_email(self, order):
+        """
+        Send the user a confirmation email
+        """        
+        print('send confirmation email')
+        customer_email = order.user_profile.email_address
+        
+        subject = render_to_string(
+            'checkout/confirmation_emails/confirmation_email_subject.txt',
+            {'order': order})
+        body = render_to_string(
+            'checkout/confirmation_emails/confirmation_email_body.txt',
+            {'order': order, 'store_contact_email': settings.DEFAULT_FROM_EMAIL, 'store_address': settings.STORE_ADDRESS, 'store_phone_number': settings.STORE_PHONE_NUMBER})
+        
+        send_mail(
+            subject,
+            body,
+            settings.DEFAULT_FROM_EMAIL,
+            [customer_email]
+        )
     
     def handle_event(self, event):
         """
@@ -66,6 +90,9 @@ class StripeWH_Handler:
                 attempt += 1
                 time.sleep(1)
         if order_exists:
+            # order was created in the view
+            # send confirmation email
+            self._send_confirmation_email(order)
             return HttpResponse(
                 content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
                 status=200)
@@ -93,12 +120,17 @@ class StripeWH_Handler:
                 return HttpResponse(
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
                     status=500)
-                    
+        
+        # order is created in webhook
+                           
         # set the cart in the request session to empty
         if 'cart' and 'start_date' and 'end_date' in self.request.session:
             del self.request.session['cart']
             del self.request.session['start_date']
             del self.request.session['end_date']
+        
+        # send confirmation email
+        self._send_confirmation_email(order)
         
         return HttpResponse(
             content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
