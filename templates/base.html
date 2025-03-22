@@ -89,7 +89,7 @@ This is the base template for the website. It contains the header, footer and th
                         <ul class="dropdown-menu" aria-labelledby="user-options">
                             {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser %}                        
-                            <li><a href="" class="dropdown-item">Product Management</a></li>                    
+                            <li><a href="{% url 'management' %}" class="dropdown-item">Product Management</a></li>                    
                             <li><hr class="dropdown-divider"></li>
                             {% endif %}
                             <li><a href="{% url 'profile' %}" class="dropdown-item">My Profile</a></li>

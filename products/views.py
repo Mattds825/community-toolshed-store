@@ -2,7 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib import messages
 from django.db.models import Q, F, Case, When, CharField, ImageField, IntegerField, Count
 from django.db.models.functions import Lower
+from django.contrib.auth.decorators import login_required
+
 from .models import Item, Tool, PartyItem, Category
+from checkout.models import Order
+from .forms import ToolForm, PartyItemForm
 
 # Create your views here.
 
@@ -129,3 +133,56 @@ def product_detail(request, product_id):
     }
     
     return render(request, 'products/product_detail.html', context)
+
+@login_required
+def management(request):
+    """
+    A view to show the management page
+    """
+    
+    items = Item.objects.all()
+    tools = Tool.objects.all()
+    party_items = PartyItem.objects.all()
+    orders = Order.objects.all()
+    
+    context = {
+        'tools': tools,
+        'party_items': party_items,
+        'orders': orders,
+        'items': items,
+    }
+    
+    return render(request, 'products/management.html', context)
+
+@login_required
+def add_tool(request):
+    """
+    Add a Tool to the store
+    """
+    
+    tool_form = ToolForm()    
+    
+    context = {
+        'tool_form': tool_form,        
+    }
+    
+    template = 'products/add_tool.html'
+    
+    return render(request, template, context)    
+
+@login_required
+def add_party_item(request):
+    """
+    Add a Party Item to the store
+    """
+    
+    party_item_form = PartyItemForm()    
+    
+    context = {
+        'party_item_form': party_item_form,        
+    }
+    
+    template = 'products/add_party_item.html'
+    
+    return render(request, template, context)
+    

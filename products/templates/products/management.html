@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+<!-- 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+{% endblock %} -->
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="page-overlay h-100 w-100 top-0 position-fixed bg-light"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h2 class="logo-font mb-4">Management</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <p>Logged in as {{ user }}</p>  
+                
+                <div class="flex my-3">
+                    <a href="{% url 'add_tool' %}" class="btn btn-primary">Create New Tool</a>
+                    <a href="{% url 'add_party_item' %}" class="btn btn-success">Create New PartyItem</a>
+                </div>
+
+                <h3>List of current items:</h3>
+
+                <p><strong>Tools</strong></p>
+                
+                <div class="table-responsive max-height-400 overflow-y-auto">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Item</th>                                
+                                <th>Condition</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Serial N.</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tool in tools %}
+                                <tr>
+                                    <td>{{ tool.name }}</td>                                    
+                                    <td class="text-center">
+                                        {% if tool.condition == 0 %}
+                                            <span class="text-success">New</span>
+                                        {% elif tool.condition == 1 %}
+                                            <span class="text-warning">Fair</span>
+                                        {% else %}
+                                            <span class="text-danger">Poor</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center" >{{ tool.category }}</td>
+                                    <td class="text-center" >£{{ tool.price }}</td>
+                                    <td class="text-center"><small>{{ tool.serial_number }}</small></td>
+                                    <td class="text-center">
+                                        <a href="" class="btn btn-sm btn-warning my-1">Edit</a>
+                                        <a href="" class="btn btn-sm btn-danger my-1">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <p class="text-muted">Order History</p>
+                <div class="card text-start">                    
+                    <div class="card-body">
+                        <h4 class="card-title">Guide</h4>
+                        <ul>
+                            <li><span class="text-info">Reserved:</span> Item is reserved an payed for but not picked up</li>
+                            <li><span class="text-warning">Active:</span> Item is in active hire, <strong>remember to return to store</strong></li>
+                            <li><span class="text-secondary">Returned:</span> Item has been returned to store</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="table-responsive max-height-400 overflow-y-auto">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Order Number</th>
+                                <th>Order User</th>
+                                <th>Order Date</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders|dictsortreversed:"date" %}
+                                <tr>
+                                    <td><a href="{% url 'order_management' order.order_number %}" title="{{ order.order_number }}">
+                                        {{ order.order_number|truncatechars:8 }}
+                                    </a></td>
+                                    <td>{{ order.user_profile }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td>{{ order.start_date }}</td>
+                                    <td>{{ order.end_date }}</td>
+                                    <td>
+                                        <ul class="list-unstyled">
+                                            {% for order_item in order.order_items.all %}
+                                                <li>
+                                                    <p>
+                                                        <span class="{% if order_item.status == 'reserved' %}text-info{% elif order_item.status == 'active' %}text-warning{% else %}text-secondary{% endif %}">
+                                                            {{ order_item.item.name }}</span> x {{ order_item.quantity }}
+                                                    </p><br>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                    <td>£{{ order.order_total }}</td>
+                                </tr>                                
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -150,13 +150,18 @@ It is built around the base template of the CodeInsitute Boutique Ado project ch
         </div>
         <div class="row">            
             <div class="col-12 col-lg-6">
-                <a href="{% url 'profile' %}" class="btn btn-outline-secondary">{% if from_profile %}Return to Profile{% else %}View Profile{% endif %}</a>
-                <a href="{% url 'products' %}" class="btn btn-primary">Browse More Products</a>
+                {% if management %}
+                    <a href="{% url 'management' %}" class="btn btn-outline-secondary">Return to Management</a>
+                {% else %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline-secondary">{% if from_profile %}Return to Profile{% else %}View Profile{% endif %}</a>
+                    <a href="{% url 'products' %}" class="btn btn-primary">Browse More Products</a>
+                {% endif %}
             </div>
         </div>
 
-        <!-- Section for testing how the flow of the item status works -->
-        {% if from_profile %}
+        <!-- section for managing the item status. currently normal users 
+         entering this page from the order list in their profiles can also do this -->
+        {% if from_profile or management%}
             <hr>
             <div class="row">
                 <div class="col-12 col-lg-6">
