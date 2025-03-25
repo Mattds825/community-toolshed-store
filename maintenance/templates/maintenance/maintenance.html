@@ -3,11 +3,6 @@
 
 {% load crispy_forms_tags %}
 
-<!-- 
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
-{% endblock %} -->
-
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
@@ -30,7 +25,7 @@
             <div class="col-12 col-lg-6">                
                 
                 <div class="flex my-3">
-                    <a href="" class="btn btn-primary">Create New Ticket</a>                    
+                    <a href="{% url 'create_new_ticket' %}" class="btn btn-primary">Create New Ticket</a>                    
                 </div>
 
                 <h3>List of active tickets:</h3>                
@@ -52,13 +47,16 @@
                                     <td >{{ ticket.created_date }}</td>                                    
                                     <td >{{ ticket.issue_description|truncatechars:36 }}</td>                                    
                                     <td class="text-center">
-                                        <a href="{% url 'edit_tool' ticket.tool.id %}" class="btn btn-sm btn-warning my-1">Open</a>                                        
+                                        <a href="{% url 'edit_tool' ticket.tool.id %}" class="btn btn-sm btn-warning my-1">Edit</a>                                        
+                                        <a href="{% url 'edit_tool' ticket.tool.id %}" class="btn btn-sm btn-success my-1">Open</a>                                        
                                     </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                     </table>
-                </div>                
+                </div>   
+                
+                <a href="{% url 'management' %}" class="btn btn-outline-primary">Go to Management</a>
             </div>
             <div class="col-12 col-lg-6">
                 <h4 class="text-muted">Past Tickets</h4>

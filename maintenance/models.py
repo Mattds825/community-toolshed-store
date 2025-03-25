@@ -14,11 +14,11 @@ MAINTENANCE_STATUS = (
 class MaintenanceTicket(models.Model):
     ticket_number = models.CharField(max_length=32, null=False, editable=False)
     tool = models.ForeignKey(Tool, null=False, on_delete=models.CASCADE, related_name='maintenance_tickets')
-    associated_order = models.ForeignKey(Order, null=False, on_delete=models.CASCADE, related_name='maintenance_tickets')
+    associated_order = models.ForeignKey(Order, null=True, blank=True, on_delete=models.CASCADE, related_name='maintenance_tickets')
     issue_description = models.TextField(null=False, blank=False)
     status = models.CharField(max_length=12, choices=MAINTENANCE_STATUS, default='pending')
     created_date = models.DateTimeField(auto_now_add=True)
-    completion_date = models.DateTimeField(null=True, blank=True)
+    completion_date = models.DateTimeField(null=True, blank=True, auto_now=True)
     
     def _generate_order_number(self):
         return uuid.uuid4().hex.upper()

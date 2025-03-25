@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="page-overlay h-100 w-100 top-0 position-fixed bg-light"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <hr>
+                <h2 class="logo-font mb-4">Maintenance</h2>
+                <h5 class="text-muted">
+                    {% if tool %}
+                        Edit the Maintenance Ticket
+                    {% else %}
+                        Add a new Maintenance Ticket
+                    {% endif %}
+                </h5>   
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <form method="POST" action="{% url 'create_new_ticket' %}" class="form mb-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% if field.name == 'status' %}
+                            <!-- filed is hidden -->
+                            <input type="hidden" name="{{ field.name }}" value="{{ field.value }}">
+                        {% else %}
+                            {{ field | as_crispy_field }}
+                        {% endif %}                        
+                    {% endfor %}         
+                    <div class="text-right my-4">
+                        <a class="btn btn-outline-secondary rounded-0" href="{% url 'maintenance' %}">Cancel</a>
+                        <button class="btn btn-success rounded-0" type="submit">
+                            Create Ticket
+                        </button>
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $('#new-image').change(function() {
+            var file = $('#new-image')[0].files[0];
+            $('#filename').text(`Image will be set to: ${file.name}`);
+        });
+    </script>
+{% endblock %}

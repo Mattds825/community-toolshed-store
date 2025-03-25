@@ -193,7 +193,7 @@ It is built around the base template of the CodeInsitute Boutique Ado project ch
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="" class="btn btn-warning">Create Ticket</a>
+                                                <a href="{% url 'create_ticket' line_item.item.id order.id %}" class="btn btn-warning">Create Ticket</a>
                                             </td>
                                         </tr>                          
                                     {% endfor %}
