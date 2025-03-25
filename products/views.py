@@ -260,3 +260,12 @@ def edit_party_item(request, item_id):
     }
     
     return render(request, 'products/edit_product.html', context)
+
+@login_required
+def delete_item(request, item_id):
+    "delete an item from the store"
+    
+    item = get_object_or_404(Item, pk=item_id)
+    item.delete()
+    messages.success(request, 'Item deleted!')
+    return redirect(reverse('management'))

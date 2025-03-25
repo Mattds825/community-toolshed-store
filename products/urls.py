@@ -10,4 +10,5 @@ urlpatterns = [
     path('add_party_item/', views.add_party_item, name='add_party_item'),
     path('edit_tool/<int:item_id>/', views.edit_tool, name='edit_tool'),
     path('edit_party_item/<int:item_id>/', views.edit_party_item, name='edit_party_item'),
+    path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
 ]
