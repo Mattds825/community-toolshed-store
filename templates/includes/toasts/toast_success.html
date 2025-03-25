@@ -17,7 +17,11 @@
                 {% for cart_item in cart_items %}
                     <div class="row">
                         <div class="col-3 my-1">
-                            <img class="w-100" src="{{ cart_item.item.image.url }}">
+                            {% if cart_item.item.image %}
+                                <img class="w-100" src="{{ cart_item.item.image.url }}" alt="{{ cart_item.item.name }}">
+                            {% else %}
+                                <img class="w-100" src="{{ MEDIA_URL }}.placeholder.jpg" alt="placeholder image">
+                            {% endif %}
                         </div>
                         <div class="col-9">
                             <p class="my-0"><strong>{{ cart_item.item.name }}</strong></p>                            

@@ -160,7 +160,16 @@ def add_tool(request):
     Add a Tool to the store
     """
     
-    form = ToolForm()    
+    if request.method == 'POST':
+        form = ToolForm(request.POST, request.FILES)
+        if form.is_valid():
+            tool = form.save()
+            messages.success(request, 'Successfully added tool!')
+            return redirect(reverse('product_detail', args=[tool.id]))
+        else:
+            messages.error(request, 'Failed to add tool. Please ensure the form is valid.')
+    else:
+        form = ToolForm()    
     
     context = {
         'form': form,
@@ -177,7 +186,16 @@ def add_party_item(request):
     Add a Party Item to the store
     """
     
-    form = PartyItemForm()    
+    if request.method == 'POST':
+        form = PartyItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            party_item = form.save()
+            messages.success(request, 'Successfully added party item!')
+            return redirect(reverse('product_detail', args=[party_item.id]))
+        else:
+            messages.error(request, 'Failed to add party item. Please ensure the form is valid.')
+    else:
+        form = PartyItemForm()    
     
     context = {
         'form': form,  

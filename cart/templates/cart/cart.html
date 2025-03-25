@@ -45,7 +45,11 @@ this template is the cart template for the website. It contains the cart items a
                             {% for cart_item in cart_items %}
                                 <tr>
                                     <td class="p-3 w-25">
-                                        <img class="img-fluid rounded" src="{{ cart_item.item.image.url }}">
+                                        {% if cart_item.item.image %}
+                                            <img class="img-fluid rounded" src="{{ cart_item.item.image.url }}" alt="{{ cart_item.item.name }}">
+                                        {% else %}
+                                            <img class="img-fluid rounded" src="{{ MEDIA_URL }}placeholder.jpg" alt="placeholder image">
+                                        {% endif %}
                                     </td>
                                     <td class="py-3">
                                         <p class="my-0"><strong>{{ cart_item.item.name }}</strong></p>                                        

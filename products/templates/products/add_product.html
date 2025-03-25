@@ -29,7 +29,7 @@
 
         <div class="row">
             <div class="col-12 col-md-6">
-                <form method="POST" action="{% url 'add_tool' %}" class="form mb-2" enctype="multipart/form-data">
+                <form method="POST" action="{% if type == 'tool' %}{% url 'add_tool' %}{% else %}{% url 'add_party_item' %}{% endif %}" class="form mb-2" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form | crispy }}
                     <div class="text-right my-4">
