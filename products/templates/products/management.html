@@ -137,6 +137,7 @@
 {% endblock %}
 
 {% block extra_js %}
+    {{ block.super }}
     <script>
         // script to show confirmation before deleting item
         $(document).ready(function() {

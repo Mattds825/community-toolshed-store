@@ -140,6 +140,10 @@ def management(request):
     A view to show the management page
     """
     
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can access this page.')
+        return redirect(reverse('homepage'))
+    
     items = Item.objects.all()
     tools = Tool.objects.all()
     party_items = PartyItem.objects.all()
@@ -159,6 +163,10 @@ def add_tool(request):
     """
     Add a Tool to the store
     """
+    
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can access this page.')
+        return redirect(reverse('homepage'))
     
     if request.method == 'POST':
         form = ToolForm(request.POST, request.FILES)
@@ -185,6 +193,10 @@ def add_party_item(request):
     """
     Add a Party Item to the store
     """
+    
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can access this page.')
+        return redirect(reverse('homepage'))
     
     if request.method == 'POST':
         form = PartyItemForm(request.POST, request.FILES)
@@ -213,6 +225,10 @@ def edit_tool(request, item_id):
     Edit a Tool in the store
     """
     
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can access this page.')
+        return redirect(reverse('homepage'))
+    
     tool = get_object_or_404(Tool, pk=item_id)
     
     if request.method == 'POST':
@@ -240,6 +256,10 @@ def edit_party_item(request, item_id):
     Edit a Party Item in the store
     """
     
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can access this page.')
+        return redirect(reverse('homepage'))
+    
     party_item = get_object_or_404(PartyItem, pk=item_id)
     
     if request.method == 'POST':
@@ -264,6 +284,10 @@ def edit_party_item(request, item_id):
 @login_required
 def delete_item(request, item_id):
     "delete an item from the store"
+    
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can access this page.')
+        return redirect(reverse('homepage'))
     
     item = get_object_or_404(Item, pk=item_id)
     item.delete()

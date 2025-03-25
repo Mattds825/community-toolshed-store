@@ -1,6 +1,7 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
 from .models import Item, Category, Tool, PartyItem
+from .widgets import CustomClearableFileInput
 
 class ToolForm(forms.ModelForm):
     """
@@ -11,6 +12,7 @@ class ToolForm(forms.ModelForm):
         exclude = ('type','rating','is_written_off','needs_repair',)
         widgets = {
             'description': SummernoteWidget(),  # Use SummernoteWidget for rich text
+            'image': CustomClearableFileInput(), # Use CustomClearableFileInput for image
         }
         
     def __init__(self, *args, **kwargs):
@@ -33,6 +35,7 @@ class PartyItemForm(forms.ModelForm):
         exclude = ('type','rating','broken_amount',)
         widgets = {
             'description': SummernoteWidget(),  # Use SummernoteWidget for rich text
+            'image': CustomClearableFileInput(), # Use CustomClearableFileInput for image
         }
         
     def __init__(self, *args, **kwargs):
