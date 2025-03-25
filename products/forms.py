@@ -1,4 +1,5 @@
 from django import forms
+from django_summernote.widgets import SummernoteWidget
 from .models import Item, Category, Tool, PartyItem
 
 class ToolForm(forms.ModelForm):
@@ -8,6 +9,9 @@ class ToolForm(forms.ModelForm):
     class Meta:
         model = Tool
         exclude = ('type','rating','is_written_off','needs_repair',)
+        widgets = {
+            'description': SummernoteWidget(),  # Use SummernoteWidget for rich text
+        }
         
     def __init__(self, *args, **kwargs):
         super(ToolForm, self).__init__(*args, **kwargs)
@@ -27,6 +31,9 @@ class PartyItemForm(forms.ModelForm):
     class Meta:
         model = PartyItem
         exclude = ('type','rating','broken_amount',)
+        widgets = {
+            'description': SummernoteWidget(),  # Use SummernoteWidget for rich text
+        }
         
     def __init__(self, *args, **kwargs):
         super(PartyItemForm, self).__init__(*args, **kwargs)

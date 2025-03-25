@@ -206,3 +206,57 @@ def add_party_item(request):
     
     return render(request, template, context)
     
+    
+@login_required
+def edit_tool(request, item_id):
+    """
+    Edit a Tool in the store
+    """
+    
+    tool = get_object_or_404(Tool, pk=item_id)
+    
+    if request.method == 'POST':
+        form = ToolForm(request.POST, request.FILES, instance=tool)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully updated tool!')
+            return redirect(reverse('product_detail', args=[tool.id]))
+        else:
+            messages.error(request, 'Failed to update tool. Please ensure the form is valid.')
+    else:
+        form = ToolForm(instance=tool)
+    
+    context = {
+        'form': form,
+        'tool': tool,
+        'type': 'tool',
+    }
+    
+    return render(request, 'products/edit_product.html', context)
+
+@login_required
+def edit_party_item(request, item_id):
+    """
+    Edit a Party Item in the store
+    """
+    
+    party_item = get_object_or_404(PartyItem, pk=item_id)
+    
+    if request.method == 'POST':
+        form = PartyItemForm(request.POST, request.FILES, instance=party_item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully updated party item!')
+            return redirect(reverse('product_detail', args=[party_item.id]))
+        else:
+            messages.error(request, 'Failed to update party item. Please ensure the form is valid.')
+    else:
+        form = PartyItemForm(instance=party_item)
+    
+    context = {
+        'form': form,
+        'party_item': party_item,
+        'type': 'party_item',
+    }
+    
+    return render(request, 'products/edit_product.html', context)

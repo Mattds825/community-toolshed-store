@@ -68,7 +68,7 @@
                                     <td class="text-center" >£{{ tool.price }}</td>
                                     <td class="text-center"><small>{{ tool.serial_number }}</small></td>
                                     <td class="text-center">
-                                        <a href="" class="btn btn-sm btn-warning my-1">Edit</a>
+                                        <a href="{% url 'edit_tool' tool.id %}" class="btn btn-sm btn-warning my-1">Edit</a>
                                         <a href="" class="btn btn-sm btn-danger my-1">Delete</a>
                                     </td>
                                 </tr>
