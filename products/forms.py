@@ -7,7 +7,7 @@ class ToolForm(forms.ModelForm):
     """
     class Meta:
         model = Tool
-        fields = '__all__'
+        exclude = ('type','rating','is_written_off','needs_repair',)
         
     def __init__(self, *args, **kwargs):
         super(ToolForm, self).__init__(*args, **kwargs)
@@ -17,8 +17,8 @@ class ToolForm(forms.ModelForm):
         
         self.fields['category'].choices = friendly_names
         
-        for field_name in self.fields.items():
-            field_name.field.widget.attrs['class'] = 'border-black rounded-0'
+        # for field_name in self.fields.items():
+        #     field_name.field.widget.attrs['class'] = 'border-black rounded-0'
 
 class PartyItemForm(forms.ModelForm):
     """
@@ -26,7 +26,7 @@ class PartyItemForm(forms.ModelForm):
     """
     class Meta:
         model = PartyItem
-        fields = '__all__'
+        exclude = ('type','rating','broken_amount',)
         
     def __init__(self, *args, **kwargs):
         super(PartyItemForm, self).__init__(*args, **kwargs)
@@ -36,5 +36,5 @@ class PartyItemForm(forms.ModelForm):
         
         self.fields['category'].choices = friendly_names
         
-        for field_name in self.fields.items():
-            field_name.field.widget.attrs['class'] = 'border-black rounded-0'
+        # for field_name in self.fields.items():
+        #     field_name.field.widget.attrs['class'] = 'border-black rounded-0'

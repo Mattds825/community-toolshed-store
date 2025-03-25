@@ -160,13 +160,14 @@ def add_tool(request):
     Add a Tool to the store
     """
     
-    tool_form = ToolForm()    
+    form = ToolForm()    
     
     context = {
-        'tool_form': tool_form,        
+        'form': form,
+        'type': 'tool',
     }
     
-    template = 'products/add_tool.html'
+    template = 'products/add_product.html'
     
     return render(request, template, context)    
 
@@ -176,13 +177,14 @@ def add_party_item(request):
     Add a Party Item to the store
     """
     
-    party_item_form = PartyItemForm()    
+    form = PartyItemForm()    
     
     context = {
-        'party_item_form': party_item_form,        
+        'form': form,  
+        'type': 'party_item',     
     }
     
-    template = 'products/add_party_item.html'
+    template = 'products/add_product.html'
     
     return render(request, template, context)
     
