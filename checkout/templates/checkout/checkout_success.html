@@ -176,6 +176,7 @@ It is built around the base template of the CodeInsitute Boutique Ado project ch
                                     <tr>
                                         <th>Item</th>
                                         <th>Status</th>
+                                        <th>Maintenance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -190,6 +191,9 @@ It is built around the base template of the CodeInsitute Boutique Ado project ch
                                                         <option value="returned" {% if line_item.status == 'returned' %}selected{% endif %}>Returned</option>
                                                     </select>
                                                 </div>
+                                            </td>
+                                            <td>
+                                                <a href="" class="btn btn-warning">Create Ticket</a>
                                             </td>
                                         </tr>                          
                                     {% endfor %}

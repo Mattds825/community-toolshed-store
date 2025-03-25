@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+<!-- 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+{% endblock %} -->
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="page-overlay h-100 w-100 top-0 position-fixed bg-light"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h2 class="logo-font mb-4">Maintenance</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-6">                
+                
+                <div class="flex my-3">
+                    <a href="" class="btn btn-primary">Create New Ticket</a>                    
+                </div>
+
+                <h3>List of active tickets:</h3>                
+                
+                <div class="table-responsive max-height-400 overflow-y-auto">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Tool</th>                                
+                                <th>Created Date</th>                                
+                                <th>Issue</th>                                
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ticket in active_tickets %}
+                                <tr>
+                                    <td>{{ ticket.tool.name }}</td>                                                                                                            
+                                    <td >{{ ticket.created_date }}</td>                                    
+                                    <td >{{ ticket.issue_description|truncatechars:36 }}</td>                                    
+                                    <td class="text-center">
+                                        <a href="{% url 'edit_tool' ticket.tool.id %}" class="btn btn-sm btn-warning my-1">Open</a>                                        
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>                
+            </div>
+            <div class="col-12 col-lg-6">
+                <h4 class="text-muted">Past Tickets</h4>
+                <div class="card text-start">                    
+                    <div class="card-body">
+                        <h4 class="card-title">Guide</h4>
+                        <ul>
+                            <li><span class="text-info">Fixed:</span> Tool was able to be fixed</li>
+                            <li><span class="text-warning">Written Off:</span> Unable fix tool</li>                            
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="table-responsive max-height-400 overflow-y-auto">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Ticket Number</th>
+                                <th>From Order</th>
+                                <th>Date Created</th>
+                                <th>Date Completed</th>                                
+                                <th>Tool</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ticket in other_tickets|dictsortreversed:"completion_date" %}
+                                <tr>
+                                    <td><a href="{% url 'order_management' order.order_number %}" title="{{ ticket.ticket_number }}">
+                                        {{ ticket.ticket_number|truncatechars:8 }}
+                                    </a></td>
+                                    <td>{{ ticket.created_date }}</td>
+                                    <td>{{ ticket.completion_date }}</td>                                                                        
+                                    <td>
+                                        {% if ticket.status == 'fixed' %}
+                                            <span class="text-info">{{ ticket.tool.name }}</span>
+                                        {% elif ticket.status == 'written_off' %}
+                                            <span class="text-warning">{{ ticket.tool.name }}</span>
+                                        {% endif %}
+                                    </td>                                    
+                                </tr>                                
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
