@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="page-overlay h-100 w-100 top-0 position-fixed bg-light"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <hr>
+                <h2 class="logo-font mb-4">Maintenance</h2>
+                <h5 class="text-muted">
+                    Viewing ticket: <strong>{{ ticket.ticket_number }}</strong>
+                </h5>   
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <p>Tool: <strong>{{ ticket.tool }}</strong></p>
+                <p>Associated Order: <strong>{{ ticket.associated_order }}</strong></p>
+                <p>Issue Description: <strong>{{ ticket.issue_description }}</strong></p>
+                <p>Maintenance Notes: <strong>{{ ticket.maintenance_notes }}</strong></p>                
+                <p>Created Date: <strong>{{ ticket.created_date }}</strong></p>
+                <p>Status: 
+                    {% if ticket.status == 'fixed' %}
+                        <strong class="text-success">{{ ticket.status }}</strong>
+                    {% elif ticket.status == 'written_off' %}
+                        <strong class="text-warning">{{ ticket.status }}</strong>
+                    {% endif %}
+                </p>                
+                <a class="btn btn-outline-secondary" href="{% url 'maintenance' %}">Return</a>
+            </div>            
+        </div>
+    </div>
+{% endblock %}

@@ -47,8 +47,8 @@
                                     <td >{{ ticket.created_date }}</td>                                    
                                     <td >{{ ticket.issue_description|truncatechars:36 }}</td>                                    
                                     <td class="text-center">
-                                        <a href="{% url 'edit_tool' ticket.tool.id %}" class="btn btn-sm btn-warning my-1">Edit</a>                                        
-                                        <a href="{% url 'edit_tool' ticket.tool.id %}" class="btn btn-sm btn-success my-1">Open</a>                                        
+                                        <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-sm btn-warning my-1">Edit</a>                                        
+                                        <a href="{% url 'complete_ticket' ticket.id %}" class="btn btn-sm btn-success my-1">Open</a>                                        
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -64,7 +64,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Guide</h4>
                         <ul>
-                            <li><span class="text-info">Fixed:</span> Tool was able to be fixed</li>
+                            <li><span class="text-success">Fixed:</span> Tool was able to be fixed</li>
                             <li><span class="text-warning">Written Off:</span> Unable fix tool</li>                            
                         </ul>
                     </div>
@@ -84,14 +84,15 @@
                         <tbody>
                             {% for ticket in other_tickets|dictsortreversed:"completion_date" %}
                                 <tr>
-                                    <td><a href="{% url 'order_management' order.order_number %}" title="{{ ticket.ticket_number }}">
+                                    <td><a href="{% url 'view_ticket' ticket.id %}" title="{{ ticket.ticket_number }}">
                                         {{ ticket.ticket_number|truncatechars:8 }}
                                     </a></td>
+                                    <td>{{ ticket.associated_order|truncatechars:8 }}</td>
                                     <td>{{ ticket.created_date }}</td>
                                     <td>{{ ticket.completion_date }}</td>                                                                        
                                     <td>
                                         {% if ticket.status == 'fixed' %}
-                                            <span class="text-info">{{ ticket.tool.name }}</span>
+                                            <span class="text-success">{{ ticket.tool.name }}</span>
                                         {% elif ticket.status == 'written_off' %}
                                             <span class="text-warning">{{ ticket.tool.name }}</span>
                                         {% endif %}

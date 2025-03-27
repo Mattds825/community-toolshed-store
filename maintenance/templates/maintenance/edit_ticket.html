@@ -17,7 +17,7 @@
                 <hr>
                 <h2 class="logo-font mb-4">Maintenance</h2>
                 <h5 class="text-muted">
-                    Add a new Maintenance Ticket
+                    Edit Maintenance Ticket
                 </h5>   
                 <hr>
             </div>
@@ -25,12 +25,14 @@
 
         <div class="row">
             <div class="col-12 col-md-6">
-                <form method="POST" action="{% url 'create_new_ticket' %}" class="form mb-2" enctype="multipart/form-data">
+                <p>Tool: <strong>{{ ticket.tool }}</strong></p>
+                <p>Associated Order: <strong>{{ ticket.associated_order }}</strong></p>
+                <form method="POST" action="{% url 'edit_ticket' ticket.id %}" class="form mb-2" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form %}
-                        {% if field.name == 'status' or field.name == 'maintenance_notes'%}
+                        {% if field.name == 'status' or field.name == 'maintenance_notes' or field.name == 'tool' or field.name == 'associated_order'%}
                             <!-- filed is hidden -->
-                            <input type="hidden" name="{{ field.name }}" value="{{ field.value }}">                        
+                            <input type="hidden" name="{{ field.name }}" value="{{ field.value }}">                                                
                         {% else %}
                             {{ field | as_crispy_field }}
                         {% endif %}                        
@@ -38,7 +40,7 @@
                     <div class="text-right my-4">
                         <a class="btn btn-outline-secondary" href="{% url 'maintenance' %}">Cancel</a>
                         <button class="btn btn-success" type="submit">
-                            Create Ticket
+                            Update Ticket
                         </button>
                     </div>
                 </form>
@@ -47,3 +49,12 @@
     </div>
 {% endblock %}
 
+{% block extra_js %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $('#new-image').change(function() {
+            var file = $('#new-image')[0].files[0];
+            $('#filename').text(`Image will be set to: ${file.name}`);
+        });
+    </script>
+{% endblock %}

@@ -85,3 +85,68 @@ def create_new_ticket(request):
     }
     
     return render(request, 'maintenance/create_ticket.html', context)
+
+def edit_ticket(request, ticket_id):
+    """ 
+    A view to edit a maintenance ticket
+    """
+    
+    ticket = MaintenanceTicket.objects.get(pk=ticket_id)
+    
+    if request.method == 'POST':
+        form = MaintenanceTicketForm(request.POST, instance=ticket)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully updated the maintenance ticket!')
+            return redirect(reverse('maintenance'))
+        else:
+            messages.error(request, 'Failed to update the ticket. Please ensure the form is valid.')
+    else:
+        form = MaintenanceTicketForm(instance=ticket)
+    
+    context = {
+        'ticket': ticket,
+        'form': form
+    }
+    
+    return render(request, 'maintenance/edit_ticket.html', context)
+
+def complete_ticket(request, ticket_id):
+    """ 
+    A view to complete a maintenance ticket
+    """
+    
+    ticket = MaintenanceTicket.objects.get(pk=ticket_id)
+    
+    if request.method == 'POST':
+        form = MaintenanceTicketForm(request.POST, instance=ticket)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully completed the maintenance ticket!')
+            return redirect(reverse('maintenance'))
+        else:
+            messages.error(request, 'Failed to update the ticket. Please ensure the form is valid.')
+    else:
+        form = MaintenanceTicketForm(instance=ticket)
+    
+    context = {
+        'ticket': ticket,
+        'form': form
+    }
+    
+    return render(request, 'maintenance/complete_ticket.html', context)
+
+def view_ticket(request, ticket_id):
+    """
+    A view to view a maintenance ticket
+    """
+    
+    ticket = MaintenanceTicket.objects.get(pk=ticket_id)
+    
+    context = {
+        'ticket': ticket
+    }
+    
+    return render(request, 'maintenance/view_ticket.html', context)

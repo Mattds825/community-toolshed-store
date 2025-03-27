@@ -5,7 +5,7 @@ from checkout.models import Order
 
 MAINTENANCE_STATUS = (
     ('pending', 'Pending'),    
-    ('fixed', 'Written Off'),
+    ('fixed', 'Fixed'),
     ('written_off', 'Written Off'),
 )
 
@@ -16,6 +16,7 @@ class MaintenanceTicket(models.Model):
     tool = models.ForeignKey(Tool, null=False, on_delete=models.CASCADE, related_name='maintenance_tickets')
     associated_order = models.ForeignKey(Order, null=True, blank=True, on_delete=models.CASCADE, related_name='maintenance_tickets')
     issue_description = models.TextField(null=False, blank=False)
+    maintenance_notes = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=12, choices=MAINTENANCE_STATUS, default='pending')
     created_date = models.DateTimeField(auto_now_add=True)
     completion_date = models.DateTimeField(null=True, blank=True, auto_now=True)
