@@ -69,3 +69,27 @@ class OrderItem(models.Model):
         
     def __str__(self):
         return f'{self.item.name} on order {self.order.order_number}'
+    
+class Subscription(models.Model):
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='subscriptions')
+    subscription_number = models.CharField(max_length=32, null=False, editable=False)    
+    price = models.DecimalField(max_digits=6, decimal_places=2, null=False, default=10)
+    start_date = models.DateField(auto_now_add=True)
+    end_date = models.DateField(null=False)    
+    stripe_pid = models.CharField(max_length=254, null=False, blank=False, default='')
+    payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS, default='pending')
+    
+    def _generate_sub_number(self):
+        return uuid.uuid4().hex.upper()
+    
+    def __str__(self):
+        return f"{self.user.username}_{self.end_date}"
+    
+    def save(self, *args, **kwargs):
+        """
+        Override the original save method to set the order number
+        if it hasn't been set already.
+        """
+        if not self.subscription_number:
+            self.subscription_number = self._generate_sub_number()
+        super().save(*args, **kwargs)

@@ -1,0 +1,23 @@
+Hello  {{ subscription.user_profile.full_name }}!
+
+This is a confirmation of your subscription at Community Toolshed. Your Subscription information is below:
+
+Subscription Number: {{ subscription.subscription_number }}
+Amount Paid: {{ subscription.price }}
+
+Start Date: {{ subscription.start_date }}
+End Date: {{ subscription.end_date }}
+
+You can now hire any item from our catalogue and pick them up at our store.
+
+Our address is:
+
+{{ store_address }}
+
+If you have any further questions, feel free to email us at {{ store_contact_email }} or call {{ store_phone_number }}
+
+Thank you for your order
+
+Sincerely,
+
+Community Toolshed

@@ -1,4 +1,4 @@
-Hello  {{ order.profile.full_name }}!
+Hello  {{ order.user_profile.full_name }}!
 
 This is a confirmation of your order at Community Toolshed. Your Order information is below:
 

@@ -1,3 +1,5 @@
+from datetime import timedelta
+from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib import messages
 
@@ -11,6 +13,16 @@ def profile(request):
     """ Display the user's profile. """
     
     profile = get_object_or_404(UserProfile, user=request.user)
+    current_subscription = None
+    
+    if profile.subscriptions.all():
+        for subscription in profile.subscriptions.all():
+            if subscription.start_date <= timezone.localdate() <= subscription.end_date:
+                profile.active_subscription = True
+                current_subscription = subscription
+                break                
+    else:
+        profile.active_subscription = False
     
     form = UserProfileForm(instance=profile)
     
@@ -31,6 +43,7 @@ def profile(request):
         'form': form,
         'orders': orders,
         'only_message_text': True,
+        'current_subscription': current_subscription,
     }
     
     return render(request, template, context)

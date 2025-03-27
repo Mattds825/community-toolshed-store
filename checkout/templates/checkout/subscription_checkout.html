@@ -1,0 +1,93 @@
+<!-- 
+created by Matthew G Da Silva 15/03/2025 
+
+It is built around the base template of the CodeInsitute Boutique Ado project checkout template.
+
+this template is the cart template for the website. It contains the cart items and the total cost of the items in the cart.
+-->
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="page-overlay h-100 w-100 top-0 position-fixed bg-light"></div>
+    <div class="container mb-2">
+        <div class="row">
+            <div class="col">
+                <h2 class="my-2">Checkout</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-6 order-lg-last mb-5">
+               <p>You are purchasing a <strong>1 year subscription to Community Toolshed</strong></p>
+               <p>The following are some important information about your purchase</p>
+                <ul>
+                     <li>Subscription Cost: <strong>£10</strong></li>
+                     <li>Subscription Duration: <strong>1 Year</strong></li>
+                     <li>Subscription Start Date: <strong>{{ sub_start_date }}</strong></li>
+                     <li>Subscription End Date: <strong>{{ sub_end_date }}</strong></li>
+                </ul>
+            </div>
+            <div class="col-12 col-lg-6">
+                <p>You are logged in as {{ profile }}</p>
+                <p>Your details can be edited in your <a href="{% url 'profile' %}">Profile Page</a></p>
+                <form data-is-subscription action="{% url 'subscription_checkout' %}"  method="POST" id="payment-form">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <fieldset class="px-3">
+                        <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
+                        <!-- A Stripe card element will go here -->
+                        <div class="mb-3" id="card-element"></div>
+
+                        <!-- Used to display form errors -->
+                        <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                        <!-- Pass the client secret so we can get the payment intent id -->
+                        <input type="hidden" value="{{  client_secret }}" name="client_secret">
+                    </fieldset>                            
+                    <button id="submit-btn" class="btn btn-success rounded-0 btn-lg">
+                        <span class="text-uppercase">Purchase Subscription</span>
+                        <span class="icon">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </button>
+                    <p class="small text-danger my-3">
+                        <span class="icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </span>
+                        <span>Your card will be charged <strong>£10</strong></span>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="loading-overlay">
+        <h1 class="loading-spinner text-center">
+            <span class="icon">
+                <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+                <p class="pt-3 text-center">loading ...</p>
+            </span>
+        </h1>
+    </div>
+{% endblock %}
+
+{% block postload_js %}
+    {{ block.super }}
+    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+    {{ client_secret|json_script:"id_client_secret"}}
+    <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,105 @@
+<!-- 
+created by Matthew G Da Silva 18/03/2025 
+
+this is the subscription_checkout_success.html file in the checkout app. It is the template for the checkout success page. It displays the subscription information and billing information for the user's subscription purchase. It also contains buttons to return to the profile page or browse products.
+
+It is built around the base template of the CodeInsitute Boutique Ado project checkout template.
+-->
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="page-overlay h-100 w-100 top-0 position-fixed bg-light"></div>
+    <div class="container mb-2">
+        <div class="row">
+            <div class="col">
+                <h2 class="my-2">Thank You</h2>
+                <hr>
+                <p>Your order information is below. A confirmation email will be sent to <strong>{{ order.user_profile.email_address }}</strong></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-7 mb-3">
+                <div class="order-confirmation-wrapper p-2 border">
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Subscription Info:</small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <p class="mb-0 text-black font-weight-bold">Subscription Number</p>
+                        </div>
+                        <div class="col-12 col-md-8 text-md-right">
+                            <p class="mb-0">{{ subscription.subscription_number }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <p class="mb-0 text-black font-weight-bold">Subscription Start Date</p>
+                        </div>
+                        <div class="col-12 col-md-8 text-md-right">
+                            <p class="mb-0">{{ subscription.start_date }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <p class="mb-0 text-black font-weight-bold">Subscription End Date</p>
+                        </div>
+                        <div class="col-12 col-md-8 text-md-right">
+                            <p class="mb-0">{{ subscription.end_date }}</p>
+                        </div>
+                    </div>
+                                                                         
+
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Billing Info:</small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <p class="mb-0 text-black font-weight-bold">Order Total</p>
+                        </div>
+                        <div class="col-12 col-md-8 text-md-right">
+                            <p class="mb-0">£{{ subscription.price }}</p>
+                        </div>
+                    </div>                 
+                </div>
+            </div>
+        </div>
+        <div class="row">            
+            <div class="col-12 col-lg-6">
+                {% if management %}
+                    <a href="{% url 'management' %}" class="btn btn-outline-secondary">Return to Management</a>
+                {% else %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline-secondary">{% if from_profile %}Return to Profile{% else %}View Profile{% endif %}</a>
+                    <a href="{% url 'products' %}" class="btn btn-primary">Browse Products</a>
+                {% endif %}
+            </div>
+        </div>        
+    </div>
+{% endblock %}
+
+{% block postload_js %}
+    {{ block.super }}
+    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+    {{ client_secret|json_script:"id_client_secret"}}
+    <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+{% endblock %}

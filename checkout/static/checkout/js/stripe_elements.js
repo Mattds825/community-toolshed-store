@@ -53,6 +53,8 @@ card.addEventListener('change', function (event) {
 // Handle form submit
 var form = document.getElementById('payment-form');
 
+console.log('is subscription:',form.dataset.isSubscription != undefined);
+
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -68,7 +70,7 @@ form.addEventListener('submit', async (event) => {
         'client_secret': clientSecret,        
     };
 
-    var url = '/checkout/cache_checkout_data/';
+    var url = form.dataset.isSubscription != undefined ? '/checkout/cache_subscription_checkout_data/' : '/checkout/cache_checkout_data/';
 
     $.post(url, postData).done(function() {
         stripe.confirmCardPayment(clientSecret, {

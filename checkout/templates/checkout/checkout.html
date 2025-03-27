@@ -61,7 +61,7 @@ this template is the cart template for the website. It contains the cart items a
                             <p class="my-0 small text-muted">Qty: {{ cart_item.quantity }}</p>
                         </div>
                         <div class="col-3 text-right">
-                            <p class="my-0 small text-muted">${% calc_subtotal cart_item.item.price cart_item.quantity days_amount %}</p>
+                            <p class="my-0 small text-muted">£{% calc_subtotal cart_item.item.price cart_item.quantity days_amount %}</p>
                         </div>
                     </div>
                 {% endfor %}

@@ -5,7 +5,7 @@ from django_countries.widgets import CountrySelectWidget
 class PaymentForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        exclude = ('user',)
+        exclude = ('user','verified')
         widgets = {
             'country': CountrySelectWidget(layout='{widget}', attrs={'class': 'border-black rounded-0 profile-form-input'}),
         }

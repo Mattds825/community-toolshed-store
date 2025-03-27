@@ -1,3 +1,9 @@
+<!-- 
+Created By Matthew Da Silva
+
+This file is the profile.html file in the profiles app. It is the template for the profile page. It displays the user's profile information, subscription status, verification status, and order history. It also contains a form to update the user's default delivery information. The profile page is accessible to logged in users only. 
+-->
+
 {% extends "base.html" %}
 {% load static %}
 
@@ -31,38 +37,71 @@
                 <p>Email Address: <strong>{{ profile.email_address }}</strong></p>
                 <p>username: <strong>{{ profile }}</strong></p>
 
+                <!-- Subscription Card -->
                 <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Subscription</h5>
+                        <h6 class="card-subtitle mb-2">
+                            {% if profile.active_subscription %}
+                                <span class="text-success">Active</span>
+                            {% else %}
+                                <span class="text-danger">Not Active</span>
+                            {% endif %}
+                        </h6>
+                        <p class="card-text">
+                            {% if profile.active_subscription %}
+                                Your subscription is active.<br>
+                                Subscription Start Date: <strong>{{ current_subscription.start_date }}</strong><br>
+                                Subscription End Date: <strong>{{ current_subscription.end_date }}</strong>
+                            {% else %}                            
+                                You do not have an active subscription. Please purchase a subscription to enable you to hire items.
+                            {% endif %}
+                        </p>
+                        {% if not profile.active_subscription %}
+                            <a href="{% url 'subscription_checkout'%}" class="card-link">Purchase Subscription</a>
+                        {% endif %} 
+                    </div>
+                </div>
+                <!-- ./Subscription Card -->
+                
+                <!-- Verification Card -->
+                <div class="card mt-3">
                     <div class="card-body">
                         <h5 class="card-title">Verification</h5>
                         <h6 class="card-subtitle mb-2">
                             {% if profile.verified %}
-                                <span class="text-success">Verified</span>
+                            <span class="text-success">Verified</span>
                             {% else %}
-                                <span class="text-danger">Not Verified</span>
+                            <span class="text-danger">Not Verified</span>
                             {% endif %}
                         </h6>
                         <p class="card-text">
                             {% if profile.verified %}
-                                All your information has been verified.
+                            All your information has been verified.
                             {% else %}                            
-                                Please go to the store to verify your account to enable you to hire items. For testing purposes, you can verify your account by clicking the button below.
+                            Please go to the store to verify your account to enable you to hire items. For testing purposes, you can verify your account by clicking the button below.
                             {% endif %}
                         </p>
                         {% if not profile.verified %}
-                            <a href="{% url 'verify_profile' profile.user.id%}" class="card-link">Verify Account</a>
+                        <a href="{% url 'verify_profile' profile.user.id%}" class="card-link">Verify Account</a>
                         {% endif %} 
                     </div>
                 </div>
-
+                <!-- ./Verification Card -->
+                
+                <!-- Default Info Form -->
                 <h4 class="text-muted mt-3">Default Delivery Information</h4>
                 <form class="mt-3" enctype="multipart/form-data" action="{% url 'profile' %}" method="POST" id="profile-update-form">
                     {% csrf_token %}
                     {{ form|crispy }}
                     <button class="btn btn-primary float-right mt-3">Update Information</button>
                 </form>
+                <!-- ./Default Info Form -->
             </div>
+            <!-- Order History Section -->
             <div class="col-12 col-lg-6">
                 <h4 class="text-muted">Order History</h4>
+                <!-- Guide Card -->
                 <div class="card text-start">                    
                     <div class="card-body">
                         <h4 class="card-title">Guide</h4>
@@ -73,7 +112,9 @@
                         </ul>
                     </div>
                 </div>
+                <!-- /.Guide Card -->
                 
+                <!-- Order History Table -->
                 <div class="table-responsive max-height-400 overflow-y-auto">
                     <table class="table table-sm table-hover">
                         <thead>
@@ -88,32 +129,34 @@
                         </thead>
                         <tbody>
                             {% for order in orders|dictsortreversed:"date" %}
-                                <tr>
-                                    <td><a href="{% url 'order_history' order.order_number %}" title="{{ order.order_number }}">
-                                        {{ order.order_number|truncatechars:8 }}
-                                    </a></td>
-                                    <td>{{ order.date }}</td>
-                                    <td>{{ order.start_date }}</td>
-                                    <td>{{ order.end_date }}</td>
-                                    <td>
-                                        <ul class="list-unstyled">
-                                            {% for order_item in order.order_items.all %}
-                                                <li>
-                                                    <p>
-                                                        <span class="{% if order_item.status == 'reserved' %}text-info{% elif order_item.status == 'active' %}text-warning{% else %}text-secondary{% endif %}">
-                                                            {{ order_item.item.name }}</span> x {{ order_item.quantity }}
-                                                    </p><br>
-                                                </li>
+                            <tr>
+                                <td><a href="{% url 'order_history' order.order_number %}" title="{{ order.order_number }}">
+                                    {{ order.order_number|truncatechars:8 }}
+                                </a></td>
+                                <td>{{ order.date }}</td>
+                                <td>{{ order.start_date }}</td>
+                                <td>{{ order.end_date }}</td>
+                                <td>
+                                    <ul class="list-unstyled">
+                                        {% for order_item in order.order_items.all %}
+                                        <li>
+                                            <p>
+                                                <span class="{% if order_item.status == 'reserved' %}text-info{% elif order_item.status == 'active' %}text-warning{% else %}text-secondary{% endif %}">
+                                                    {{ order_item.item.name }}</span> x {{ order_item.quantity }}
+                                                </p><br>
+                                            </li>
                                             {% endfor %}
                                         </ul>
                                     </td>
                                     <td>£{{ order.order_total }}</td>
-                                </tr>                                
+                            </tr>                                
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
+                <!-- /.Order History Table -->
             </div>
+            <!-- /.Order History Section -->
         </div>
     </div>
 {% endblock %}

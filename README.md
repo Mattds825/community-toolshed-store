@@ -63,6 +63,68 @@ A full list of the user requirements can be seen in the [TESTING.md file](/TESTI
 
 ### Main App Features
 
+#### User Authentication
+
+- Users can sign up and login to the platform
+- Users can logout of the platform
+
+Users emails are unique and passwords are hashed for security
+
+#### Browsing Items
+
+- Users can browse all items available for rent
+- Users can filter items by category
+- Users can search for items by name
+
+#### Item Details
+
+- Users can view the details of an individual item
+- Users can see the availability of an item
+- Users can see the rental price of an item
+
+#### Cart
+
+Cart verifies if users are logged in and verified
+
+- Users can add items to their cart
+- Users can view their cart
+- Users can remove items from their cart
+- Users can adjust the quantity of items in their cart
+
+#### Checkout
+
+- Users can checkout their cart
+- Users can pay for their cart
+- Users can view their order confirmation
+
+#### Orders
+
+- Users can view their order history
+- Users can view the details of an individual order
+
+#### Maintenance
+
+- Users can report an item as needing maintenance
+- Managers can view all maintenance tickets
+- Managers can update the status of a maintenance ticket
+- Managers can create a new maintenance ticket
+
+#### Profile
+
+- Users can view their profile
+- Users can update their profile
+- Users can view their subscription status
+- Users can renew their subscription
+- Users can view their order history
+- Users can request verification of their account
+
+#### Subscription
+
+- Users can subscribe to the platform
+- Users can pay for their subscription
+- Users can view their subscription status
+- Users can renew their subscription
+
 ### Django App Structure 
 
 #### community_toolshed Main Project
@@ -71,11 +133,23 @@ here is where is main urls and the settings file lives
 
 #### homepage App
 
+here is the main landing page of the website, where users can see the main features of the website and sign up or login
+
 #### profiles App
+
+here is where the user profile is managed, users can update their profile, view their subscription status and renew their subscription, and see their order history and view their verification status
 
 #### cart App
 
+here is where the cart is managed, users can add items to their cart, view their cart, remove items from their cart and adjust the quantity of items in their cart
+
 #### checkout App 
+
+here is where the checkout process is managed, users can checkout their cart, pay for their cart and view their order confirmation
+
+#### maintenance App  
+
+here is where the maintenance process is managed, users can report an item as needing maintenance, managers can view all maintenance tickets, update the status of a maintenance ticket and create a new maintenance ticket
 
 ### Database Design 
 
@@ -102,6 +176,10 @@ Subclass of Item Model
 ## UI/UX
 
 ### Mockups 
+
+No mockups were created for this project, it was designed as I went along based on the Code Institute walkthrough project.
+
+The styling are mainly sticking to bootstrap defaults with some custom css for the glassmorphism effect and some others
 
 ### Pages
 
@@ -131,11 +209,30 @@ using default bootstrap colors to ensure consistency
 
 ### Accessibility 
 
+Making sure to use bootstrap classes to ensure that the website is accessible
+
 #### Hover on Buttons
+
+All buttons have a hover effect to show that they are clickable
+
+#### Focus on Inputs
+
+All inputs have a focus effect to show that they are selected
+
+#### Contrast
+
+All text has a high contrast with the background to ensure readability
 
 #### Confirmation, Information and Error Messages
 
 ### Defensive Design 
+
+- User has to be logged in to access certain pages
+- User has to be verified to access certain pages
+- User will be informed if they try to access a page they are not allowed to access
+- User receives a confirmation message when they have successfully completed an action
+- User receives an error message when they have failed to complete an action
+- User revives an information message when they need to know something
 
 ## Deployment
 
