@@ -1,14 +1,26 @@
 from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from django.contrib import messages
 from products.models import Item, Tool, PartyItem
+from profiles.models import UserProfile
 
 # Create your views here.
 
 def view_cart(request):
     """
     A view to return the cart page
-    """   
-    return render(request, 'cart/cart.html')
+    """
+    
+    profile = None
+    
+    if request.user.is_authenticated:
+        user = request.user
+        profile = UserProfile.objects.get(user=user)
+        
+        context = {
+            'profile': profile
+        }
+       
+    return render(request, 'cart/cart.html', context)
 
 
 def add_to_cart(request, item_id):
@@ -16,10 +28,15 @@ def add_to_cart(request, item_id):
     Add a quantity of the specified product to the shopping cart
     """
     
+    redirect_url = request.POST.get('redirect_url')
+    
+    if not request.user.is_authenticated:
+        messages.error(request, 'You must be logged in to add items to your cart')
+        return redirect(redirect_url)
+    
     item = get_object_or_404(Item, pk=item_id)
     
     quantity = int(request.POST.get('quantity'))
-    redirect_url = request.POST.get('redirect_url')
     
     start_date = request.POST.get('start_date')
     end_date = request.POST.get('end_date')

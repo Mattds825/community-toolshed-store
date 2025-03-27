@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib import messages
 
 from .models import UserProfile
@@ -69,6 +69,27 @@ def order_management(request, order_number):
         'order': order,
         'only_message_text': True,
         'management': True,
+    }
+    
+    return render(request, template, context)
+
+def verify_profile(request, user_id):
+    """ Verify the user's profile. """
+    
+    profile = get_object_or_404(UserProfile, user=user_id)
+    
+    if profile.verified:
+        messages.error(request, 'Profile already verified')
+    else:
+        profile.verified = True
+        profile.save()
+        messages.success(request, 'Profile verified successfully')
+        return redirect(reverse('profile'))
+    
+    template = 'profiles/profile.html'
+    context = {
+        'profile': profile,
+        'only_message_text': True,
     }
     
     return render(request, template, context)

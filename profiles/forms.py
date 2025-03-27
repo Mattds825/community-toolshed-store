@@ -5,7 +5,7 @@ from django_countries.widgets import CountrySelectWidget
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        exclude = ('user','email_address')
+        exclude = ('user','email_address', 'verified')
         widgets = {
             'country': CountrySelectWidget(layout='{widget}', attrs={'class': 'border-black rounded-0 profile-form-input'}),
         }
@@ -26,8 +26,7 @@ class UserProfileForm(forms.ModelForm):
             'street_address2': 'Street Address 2',
             'county': 'County, State or Locality',
         }
-
-        self.fields['phone_number'].widget.attrs['autofocus'] = True
+        
         for field in self.fields:
             if field != 'country':
                 if self.fields[field].required:
@@ -35,5 +34,5 @@ class UserProfileForm(forms.ModelForm):
                 else:
                     placeholder = placeholders[field]
                 self.fields[field].widget.attrs['placeholder'] = placeholder
-            self.fields[field].widget.attrs['class'] = 'border-black rounded-0 profile-form-input'
+            self.fields[field].widget.attrs['class'] = 'border-black profile-form-input'
             self.fields[field].label = False

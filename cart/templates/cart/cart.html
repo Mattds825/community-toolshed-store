@@ -82,30 +82,42 @@ this template is the cart template for the website. It contains the cart items a
                             </tr>                           
                             <tr>
                                 <td colspan="5" class="text-right">
-                                    <h4><strong>Bag Total: ${{ total|floatformat:2 }}</strong></h4>                                                                        
+                                    <h4><strong>Bag Total: ${{ total|floatformat:2 }}</strong></h4>
+                                    {% if not profile.verified %}
+                                        <p class="text-danger">Please verify your profile to proceed to checkout</p>
+                                    {% endif %}                                                                        
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="5" class="text-right">
-                                    <a href="{% url 'products' %}" class="btn btn-outline-secondary rounded-0 btn-lg">
+                                    <a href="{% url 'products' %}" class="btn btn-outline-secondary btn-lg">
                                         <span class="icon">
                                             <i class="fas fa-chevron-left"></i>
                                         </span>
                                         <span class="text-uppercase">Keep Shopping</span>
-                                    </a>
-                                    <a href="{% url 'checkout' %}" class="btn btn-success rounded-0 btn-lg">
-                                        <span class="text-uppercase">Secure Checkout</span>
-                                        <span class="icon">
-                                            <i class="fas fa-lock"></i>
-                                        </span>
-                                    </a>
+                                    </a>                                    
+                                    {% if profile.verified %}
+                                        <a href="{% url 'checkout' %}" class="btn btn-success btn-lg">
+                                            <span class="text-uppercase">Secure Checkout</span>
+                                            <span class="icon">
+                                                <i class="fas fa-lock"></i>
+                                            </span>
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'profile' %}" class="btn btn-warning btn-lg">
+                                            <span class="text-uppercase">Verify Profile</span>
+                                            <span class="icon">
+                                                <i class="fas fa-user-check"></i>
+                                            </span>
+                                        </a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         </table>
                     </div>
                 {% else %}
                     <p class="lead mb-5">Your bag is empty.</p>
-                    <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
+                    <a href="{% url 'products' %}" class="btn btn-outline-black btn-lg">
                         <span class="icon">
                             <i class="fas fa-chevron-left"></i>
                         </span>
