@@ -14,3 +14,7 @@ class MaintenanceTicketForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MaintenanceTicketForm, self).__init__(*args, **kwargs)
         
+        # add None and a blank option to the associated_order field
+        self.fields['associated_order'].required = False  # Allow None as a valid value
+        self.fields['associated_order'].choices = [(None, 'No Order')] + list(self.fields['associated_order'].choices)[1:]
+        

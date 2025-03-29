@@ -30,6 +30,14 @@ Payment statuses: pending, paid, failed.
 Tools marked as broken or needing repair are sent for maintenance.
 Maintenance requests track repair status (pending, in_progress, fixed, written_off).
 
+## 🎯 Business Objectives
+
+This website should advertise the benefits of joining the Community Toolshed and subscribing to the rental service. The main goal is to attract new subscribers and encourage existing subscribers to continue their membership.
+
+The business wants to be able to verify the identity of users and ensure that they are responsible renters. The business also wants to track the condition of items and ensure that they are maintained and repaired as needed.
+
+There will be a 1 year subscription fee of £10 for all users. This fee will be used to maintain the website and cover the cost of repairs and maintenance.
+
 ## 📖 User Stories
 
 ### 1️⃣ As a Community Member, I want to rent tools so that I can complete home improvement projects affordably.
@@ -51,15 +59,13 @@ Maintenance requests track repair status (pending, in_progress, fixed, written_o
 
 - ✅ I can subscribe and pay the $10 yearly fee.
 - ✅ I can view my subscription status (active/inactive).
-- ✅ I receive reminders when my subscription is about to expire.
-- ✅ I can renew my subscription before it expires.
 - ✅ If my subscription is inactive, I cannot rent items.
 
 ## User Requirements
 
 A full list of the user requirements can be seen in the [TESTING.md file](/TESTING.md) 
 
-## Features
+## Features 
 
 ### Main App Features
 
@@ -125,6 +131,17 @@ Cart verifies if users are logged in and verified
 - Users can view their subscription status
 - Users can renew their subscription
 
+#### Stripe Integration
+
+- Users can pay for their cart using stripe
+- Users can pay for their subscription using stripe
+
+#### Webhooks
+
+- Webhooks are used to create redundancy in the payment system
+- Webhooks are used to update the status of an order when a payment is successful
+- Webhooks are used to send confirmation emails
+
 ### Django App Structure 
 
 #### community_toolshed Main Project
@@ -139,17 +156,37 @@ here is the main landing page of the website, where users can see the main featu
 
 here is where the user profile is managed, users can update their profile, view their subscription status and renew their subscription, and see their order history and view their verification status
 
+This app also contains the UserProfile Model
+
+#### products App
+
+Here is where the products are managed, users can view all items available for rent, view the details of an individual item, see the availability of an item and see the rental price of an item
+
+This app contains the Item Model, the Category Model, the Tool Model and the PartyItem Model
+
+This app also contains the views used by the manager to add and  edi items
+
 #### cart App
 
-here is where the cart is managed, users can add items to their cart, view their cart, remove items from their cart and adjust the quantity of items in their cart
+Here is where the cart is managed, users can add items to their cart, view their cart, remove items from their cart and adjust the quantity of items in their cart
+
+This app contains a cart contexts processor to ensure that the cart is available on all pages
 
 #### checkout App 
 
-here is where the checkout process is managed, users can checkout their cart, pay for their cart and view their order confirmation
+Here is where the checkout process is managed, users can checkout their cart, pay for their cart and view their order confirmation
+
+The subscription payment process is also managed here
+
+This app contains the Order Model, the OrderItem Model and the Subscription Model
+
+There is also a webhook handler to manage stripe webhooks and also to send confirmation emails
 
 #### maintenance App  
 
 here is where the maintenance process is managed, users can report an item as needing maintenance, managers can view all maintenance tickets, update the status of a maintenance ticket and create a new maintenance ticket
+
+This app contains the MaintenanceTicket Model
 
 ### Database Design 
 
@@ -168,6 +205,8 @@ Subclass of Item Model
 #### Order Model
 
 #### OrderItem Model
+
+#### Subscription Model
 
 #### UserProfile Model
 
@@ -201,6 +240,24 @@ The styling are mainly sticking to bootstrap defaults with some custom css for t
 
 #### Checkout (Success) Page
 
+#### Checkout (Subscription Payment) Page
+
+#### Checkout (Subscription Success) Page
+
+#### Maintenance Page
+
+#### Add Maintenance Ticket Page
+
+#### Edit Maintenance Ticket Page
+
+#### Complete(Open) Maintenance Ticket Page
+
+#### Management Page
+
+#### Add Tool Page
+
+#### Edit Tool Page
+
 ### Structure and Navigation 
 
 ### Colors 
@@ -225,20 +282,56 @@ All text has a high contrast with the background to ensure readability
 
 #### Confirmation, Information and Error Messages
 
+- User receives a confirmation message when they have successfully completed an action
+- User receives an error message when they have failed to complete an action
+- User revives an information message when they need to know something
+
 ### Defensive Design 
 
 - User has to be logged in to access certain pages
 - User has to be verified to access certain pages
 - User will be informed if they try to access a page they are not allowed to access
-- User receives a confirmation message when they have successfully completed an action
-- User receives an error message when they have failed to complete an action
-- User revives an information message when they need to know something
 
 ## Deployment
 
 Deployment is done through Heruko
 
 ## How to Use
+
+### As A User
+
+1. Go to the website
+2. Sign up for an account
+3. confirm your email
+4. fill out the detail in your profile
+6. subscribe to the platform
+7. activate your profile
+8. browse the items available for rent
+9. add items to your cart
+10. checkout your cart
+11. pay for your cart
+12. view your order confirmation
+13. open the order page to view your order details and change status (for testing purposes)
+
+### As A Manager
+
+**Test Superuser Account:**
+
+- username: 
+- password: 
+
+1. Go to the website
+2. Log into the superuser account
+3. go to management page
+4. add a new item
+5. edit an item
+6. view past orders
+7. view specific order details and change status
+8. go to maintenance page
+9. add a new maintenance ticket
+10. edit a maintenance ticket
+11. view all maintenance tickets
+
 
 ### Stripe Card Test Numbers
 
@@ -255,7 +348,15 @@ this information if from the stripe [docs](https://docs.stripe.com/payments/acce
 
 ## Testing
 
+Testing information can be found in the [TESTING.md file](/TESTING.md)
+
 ## Future Considerations
+
+Due to time constraints, there are some features that were not implemented in this project that could be added in the future
+
+- Add a feature to allow users to request items that are not currently in the inventory
+- Flesh out the rating system to allow users to rate items and leave reviews
+- use the stripe subscription feature to manage the subscription payments
 
 ## Credits 
 

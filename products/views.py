@@ -33,14 +33,19 @@ def all_products(request):
     filteredProducts = Item.objects.none()
     sku_list = []
     
+    
     for product in products:
         print(product.sku)
         if product.type == 0:
             if product.sku not in sku_list:
                 sku_list.append(product.sku)
                 filteredProducts |= Item.objects.filter(id=product.id)
+        else:
+            sku_list.append(product.sku)
+            filteredProducts |= Item.objects.filter(id=product.id)
             
     products = filteredProducts                     
+    print(products)
     
     # handle request to filter products by category
     if request.GET:
@@ -116,7 +121,8 @@ def product_detail(request, product_id):
     if product.type == 0:
         available_amount = Tool.objects.filter(sku=product.sku, is_available=True).count()
     else:
-        available_amount = product.stock_amount
+        party_item = PartyItem.objects.get(id=product_id)   
+        available_amount = party_item.stock_amount
         
     cart = request.session.get('cart', {})
     

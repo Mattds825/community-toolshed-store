@@ -55,7 +55,8 @@ def create_ticket(request, tool_id, order_id):
     
     context = {
         'tool': tool,
-        'form': form
+        'form': form,
+        'only_message_text': True
     }
     
     return render(request, 'maintenance/create_ticket.html', context)
@@ -71,6 +72,11 @@ def create_new_ticket(request):
         print(form.fields)
         
         if form.is_valid():
+            # set the tool to inactive
+            tool = Tool.objects.get(pk=form.cleaned_data['tool'].id)
+            tool.is_available = False
+            tool.save()
+            
             form.save()
             messages.success(request, 'Successfully create a maintenance ticket!')
             return redirect(reverse('maintenance'))
@@ -81,7 +87,8 @@ def create_new_ticket(request):
         form = MaintenanceTicketForm()
     
     context = {
-        'form': form
+        'form': form,
+        'only_message_text': True
     }
     
     return render(request, 'maintenance/create_ticket.html', context)
@@ -93,21 +100,36 @@ def edit_ticket(request, ticket_id):
     
     ticket = MaintenanceTicket.objects.get(pk=ticket_id)
     
+    # logic to ensure tickets with no associated order can be edited
+    isNone = False    
+    if ticket.associated_order is None:
+        isNone = True
+    
     if request.method == 'POST':
-        form = MaintenanceTicketForm(request.POST, instance=ticket)
+        form = MaintenanceTicketForm(request.POST, instance=ticket)                
         
-        if form.is_valid():
+        # print choices for associated_order
+        print("choices:",form.fields['associated_order'].choices[0])
+        
+        # print the value of associated_order
+        print('val',form['associated_order'].value())
+        
+            
+        if form.is_valid():            
             form.save()
             messages.success(request, 'Successfully updated the maintenance ticket!')
             return redirect(reverse('maintenance'))
         else:
+            print('error', form.errors)
             messages.error(request, 'Failed to update the ticket. Please ensure the form is valid.')
     else:
         form = MaintenanceTicketForm(instance=ticket)
     
     context = {
         'ticket': ticket,
-        'form': form
+        'form': form,
+        'isNone': isNone,
+        'only_message_text': True
     }
     
     return render(request, 'maintenance/edit_ticket.html', context)
@@ -119,21 +141,39 @@ def complete_ticket(request, ticket_id):
     
     ticket = MaintenanceTicket.objects.get(pk=ticket_id)
     
+     # logic to ensure tickets with no associated order can be edited
+    isNone = False    
+    if ticket.associated_order is None:
+        isNone = True    
+    
     if request.method == 'POST':
         form = MaintenanceTicketForm(request.POST, instance=ticket)
         
         if form.is_valid():
+            # if the status is set to written off, set the tool to inactive
+            if form['status'].value() == 'written_off':
+                tool = Tool.objects.get(pk=ticket.tool.id)
+                tool.is_available = False
+                tool.save()
+            elif form['status'].value() == 'fixed':
+                tool = Tool.objects.get(pk=ticket.tool.id)
+                tool.is_available = True
+                tool.save()                                
             form.save()
             messages.success(request, 'Successfully completed the maintenance ticket!')
             return redirect(reverse('maintenance'))
         else:
+            # print the errors
+            print('error', form.errors)
             messages.error(request, 'Failed to update the ticket. Please ensure the form is valid.')
     else:
         form = MaintenanceTicketForm(instance=ticket)
     
     context = {
         'ticket': ticket,
-        'form': form
+        'form': form,
+        'isNone': isNone,
+        'only_message_text': True
     }
     
     return render(request, 'maintenance/complete_ticket.html', context)

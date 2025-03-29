@@ -27,12 +27,14 @@
             <div class="col-12 col-md-6">
                 <p>Tool: <strong>{{ ticket.tool }}</strong></p>
                 <p>Associated Order: <strong>{{ ticket.associated_order }}</strong></p>
-                <form method="POST" action="{% url 'edit_ticket' ticket.id %}" class="form mb-2" enctype="multipart/form-data">
+                <form method="POST" action="{% url 'complete_ticket' ticket.id %}" class="form mb-2" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form %}
-                        {% if field.name == 'tool' or field.name == 'associated_order' or field.name == 'issue_description'%}
+                        {% if field.name == 'tool' or field.name == 'issue_description'%}
                             <!-- filed is hidden -->
                             <input type="hidden" name="{{ field.name }}" value="{{ field.value }}">                                                
+                        {% elif field.name == 'associated_order' and isNone %}                                                                                                                                
+                            <input type="hidden" name="{{ field.name }}" value=''>
                         {% else %}
                             {{ field | as_crispy_field }}
                         {% endif %}                        
