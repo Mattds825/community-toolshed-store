@@ -1,1 +1,1 @@
-web: gunicorn dailys.wsgi
+web: gunicorn community_toolshed.wsgi
