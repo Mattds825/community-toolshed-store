@@ -6,6 +6,12 @@ The Community Toolshed Renting Application is a platform that allows users to su
 
 This project is potentially something that will be reworked into a live project used by the Handcross Hardware local store, where I currently help at.
 
+## In a Nutshell
+
+Community Toolshed is a full-stack e-commerce platform built with Django, Stripe, and Bootstrap, designed for a local hardware store’s rental service. The platform allows users to sign up, subscribe, and rent tools or party items, such as cutlery, plates, and power tools. Once subscribed, users can place rental orders, view past orders, and manage their profiles. Payments are securely processed using Stripe, ensuring a smooth checkout experience. The platform also includes a dedicated management system where store managers can add, edit, and remove products, as well as oversee rentals. A built-in maintenance system enables managers to track tool conditions, create repair tickets, and update tool statuses as needed. The site features a responsive, user-friendly interface, ensuring seamless navigation across devices.
+
+This project was built using Code Institute’s Boutique Ado template as a foundation. However, significant modifications were made to the Django models, templates, and order logic to better suit the rental-based functionality and management features required for the Community Toolshed service. The project follows best practices in version control using Git and GitHub and is deployed on Heroku for live access.
+
 ## Project Goals
 
 ### 🔹 User & Subscription Management
