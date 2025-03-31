@@ -1,4 +1,8 @@
+![community toolshed all devices](/documentation/all_devices_black.png)
+
 # Community Toolshed
+
+[live site](https://ci-community-toolshed-afafcfe7f3c4.herokuapp.com/)
 
 This is the 4th milestone project for the CodeInstitute level 5 Web Application Development Course
 
@@ -198,25 +202,126 @@ This app contains the MaintenanceTicket Model
 
 #### Item Model
 
+![item model table](/documentation/erd/item_table.png)
+
+- In the type field, the item is either a tool or a party item, 0 or 1 respectively
+- In the current implementation the item can only have one category
+
 #### Category Model
+
+![category model table](/documentation/erd/category_table.png)
 
 #### Tool Model
 
-Subclass of Item Model
+**Subclass of Item Model**
+
+![tool model table](/documentation/erd/tool_table.png)
+
+- The tool condition can be one fo the following
+```python
+TOOL_CONDITION = (
+    (0, 'New'),
+    (1, 'Fair'),
+    (2, 'Poor'),
+)
+```
+- The tool model has a serial number field to track individual tools. The item parent has and sku field which allows multiple tool of the same kind, and still be individually maintained
 
 #### PartyItem Model
 
-Subclass of Item Model
+**Subclass of Item Model**
+
+![party item model table](/documentation/erd/party_item_table.png)
+
+- the party items are bulk tracked, so there is no serial number field, instead teh following fields are used to track the item
+    - available_amount: the amount of items available for rent
+    - broken_amount: the amount of items that are damaged
+    - stock_amount: the amount of items in stock
 
 #### Order Model
 
+![order model table](/documentation/erd/order_table.png)
+
+- The payment status can be one of the following
+```python
+PAYMENT_STATUS = (
+    ('pending', 'Pending'),
+    ('paid', 'Paid'),
+    ('failed', 'Failed'),
+)
+```
+- the stripe_pid field is used to store the stripe payment id
+- start_date and end_date are used to track the rental period
+- the order is associated with a UserProfile for the user who placed the order, this allows the user to view their order history
+
 #### OrderItem Model
+
+![order item model table](/documentation/erd/order_item_table.png)
+
+- the order item has a status, which can be:
+```python 
+ORDER_ITEM_STATUS = (
+    ('reserved', 'Reserved'),
+    ('active', 'Currently Rented'),    
+    ('returned', 'Returned'),    
+)
+```
+- the order item is associated with an order, this allows the user to view the details of an individual order
+- the order item is directly associated with an item, this allows the user to view the details of an individual item
 
 #### Subscription Model
 
+![subscription model table](/documentation/erd/subscription_table.png)
+
+- the subscription is associated with a UserProfile, this allows the user to view their subscription status
+    - users with an active subscription can rent items
+    - users with an inactive subscription cannot rent items
+- the is a stripe_pid field to store the stripe payment id
+- the subscription number is unique to each subscription and users can purchase a new subscription each year
+
 #### UserProfile Model
 
+![user profile model table](/documentation/erd/user_profile_table.png)
+
+This model is used to store the user's profile information and is associated with the Django User model
+
+- there is a verified field to track if the user has been verified
+- there is a subscription field to track if the user has an active subscription
+    - in practice this would allows managers to verify users once they visit the store
+
 #### MaintenanceTicket Model
+
+![maintenance ticket model table](/documentation/erd/maintenance_ticket_table.png)
+
+A maintenance ticket is created when a user/manager reports an item as needing maintenance
+
+- the status field can be one of the following
+```python
+MAINTENANCE_STATUS = (
+    ('pending', 'Pending'),    
+    ('fixed', 'Fixed'),
+    ('written_off', 'Written Off'),
+)
+```
+- the maintenance ticket is associated with an tool, this allows the user/manager to view the details of the tool and also view care instructions
+- the maintenance ticket can be associated with an order, this allows the user/manager to track down the details of the order and also view the rental period and who rented the item
+
+#### EmailAddress and EmailConfirmation Models
+
+These are additional models that are used to manage the email verification process
+
+![email address model table](/documentation/erd/email_address_table.png)
+![email confirmation model table](/documentation/erd/email_confirmation_table.png)
+
+#### Compete ERD
+
+This is the complete ERD for the project
+
+It was generated with the graph_models command and the image was created with GraphvizOnline
+
+
+
+![complete erd](/documentation/erd/complete_erd.png)
 
 ## UI/UX
 
@@ -227,6 +332,8 @@ No mockups were created for this project, it was designed as I went along based 
 The styling are mainly sticking to bootstrap defaults with some custom css for the glassmorphism effect and some others
 
 ### Pages
+
+These are the main pages of the website, I will attach a screenshot of both the mobile and desktop view 
 
 #### Sign In Page
 
@@ -302,6 +409,8 @@ All text has a high contrast with the background to ensure readability
 
 Deployment is done through Heruko
 
+[live site](https://ci-community-toolshed-afafcfe7f3c4.herokuapp.com)
+
 ## How to Use
 
 ### As A User
@@ -360,9 +469,17 @@ Testing information can be found in the [TESTING.md file](/TESTING.md)
 
 Due to time constraints, there are some features that were not implemented in this project that could be added in the future
 
+### Time Bound
+
+- there is some redundancy in my tables that could be removed
+- I managed to implement the maintenance system for tool, but did not have time to implement the cleaning system for the party items
+- I waned to create dining sets with the part items but did not have time to implement this
+
+### Future Features
+
 - Add a feature to allow users to request items that are not currently in the inventory
 - Flesh out the rating system to allow users to rate items and leave reviews
-- use the stripe subscription feature to manage the subscription payments
+- use the built in stripe subscription feature to manage the subscription payments
 
 ## Credits 
 
@@ -378,6 +495,8 @@ Due to time constraints, there are some features that were not implemented in th
 - django crispy forms - for handling and creating forms
 - [Dbdiagram.io](https://dbdiagram.io/d) - used to create database schema
 - [stripe](https://stripe.com) - used to manage payments
+- [GraphvizOnline](https://dreampuf.github.io/GraphvizOnline)
+- [AWS S3](https://aws.amazon.com/s3/) - used to store static files and media files
 
 ### Resources
 
@@ -387,3 +506,4 @@ Due to time constraints, there are some features that were not implemented in th
 and the tutorial lessons where followed in order to create this project 
 - [stripe docs](https://docs.stripe.com/)
 - [css.glass](https://css.glass) - for glassmorphism effect
+- Youtube [tutorial by BugBytes](https://www.youtube.com/watch?v=qzrE7cfc_3Q&t=232s) for generating the ER diagrams for the django models
