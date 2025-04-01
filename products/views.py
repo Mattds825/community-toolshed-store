@@ -34,8 +34,7 @@ def all_products(request):
     sku_list = []
     
     
-    for product in products:
-        print(product.sku)
+    for product in products:        
         if product.type == 0:
             if product.sku not in sku_list:
                 sku_list.append(product.sku)
@@ -44,8 +43,7 @@ def all_products(request):
             sku_list.append(product.sku)
             filteredProducts |= Item.objects.filter(id=product.id)
             
-    products = filteredProducts                     
-    print(products)
+    products = filteredProducts                         
     
     # handle request to filter products by category
     if request.GET:

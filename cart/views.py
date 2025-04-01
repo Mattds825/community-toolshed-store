@@ -20,7 +20,9 @@ def view_cart(request):
             'profile': profile
         }
        
-    return render(request, 'cart/cart.html', context)
+        return render(request, 'cart/cart.html', context)
+    else:
+        return render(request, 'cart/cart.html')
 
 
 def add_to_cart(request, item_id):

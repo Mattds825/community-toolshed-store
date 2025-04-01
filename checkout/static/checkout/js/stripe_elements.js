@@ -53,8 +53,6 @@ card.addEventListener('change', function (event) {
 // Handle form submit
 var form = document.getElementById('payment-form');
 
-console.log('is subscription:',form.dataset.isSubscription != undefined);
-
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 

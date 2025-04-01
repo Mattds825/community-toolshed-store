@@ -319,8 +319,6 @@ This is the complete ERD for the project
 
 It was generated with the graph_models command and the image was created with GraphvizOnline
 
-
-
 ![complete erd](/documentation/erd/complete_erd.png)
 
 ## UI/UX
@@ -337,41 +335,435 @@ These are the main pages of the website, I will attach a screenshot of both the 
 
 #### Sign In Page
 
+| Desktop | Mobile |
+| --- | --- |
+| ![sign in page desktop](/documentation/pages_screenshots/sign_in_page_desktop.png) | ![sign in page mobile](/documentation/pages_screenshots/sign_in_page_mobile.png) |
+
 #### Sign Up Page
+
+| Desktop | Mobile |
+| --- | --- |
+| ![sign up page desktop](/documentation/pages_screenshots/sign_up_page_desktop.png) | ![sign up page mobile](/documentation/pages_screenshots/sign_up_page_mobile.png) |
 
 #### Logout Page
 
+| Desktop | Mobile |
+| --- | --- |
+| ![logout page desktop](/documentation/pages_screenshots/logout_page_desktop.png) | ![logout page mobile](/documentation/pages_screenshots/logout_page_mobile.png) |
+
 #### Home Page
+
+| Desktop | Mobile |
+| --- | --- |
+| ![home page desktop](/documentation/pages_screenshots/home_page_desktop.png) | ![home page mobile](/documentation/pages_screenshots/home_page_mobile.png) |
 
 #### Products Page
 
+This page is used to display all the items available for rent
+
+| Desktop | Mobile |
+| --- | --- |
+| ![products page desktop](/documentation/pages_screenshots/products_page_desktop.png) | ![products page mobile](/documentation/pages_screenshots/products_page_mobile.png) |
+
+it can also be filtered by type, category, sorted by the user or be searched for
+
+**Filtering options**
+
+![tool filtering](/documentation/features/item_filtering_tool.png)
+![party item filtering](/documentation/features/item_filtering_party_item.png)
+![offer item filtering](/documentation/features/item_filtering_offers.png)
+
+**Sorting options**
+
+![item filtering](/documentation/features/item_filtering_all.png)
+![item sorting](/documentation/features/item_sorting.png)
+
+**Search**
+
+![item search](/documentation/features/search_items_input.png)
+
 #### Individual Item Page
+
+This page is used to display the details of an individual item
+
+Users can:
+- set a start and end date to rent the item
+- see the availability of the item
+- see the rental price of the item
+- see the category of the item and click on it to see all items in that category
+- add item to cart
+
+| Desktop | Mobile |
+| --- | --- |
+| ![individual item page desktop](/documentation/pages_screenshots/individual_item_page_desktop.png) | ![individual item page mobile](/documentation/pages_screenshots/individual_item_page_mobile.png) |
 
 #### Cart Page
 
+This page is used to display the items in the cart
+
+Users can:
+- see the content of the cart
+- edit or remove items from the cart
+- continue to checkout
+
+| Desktop | Mobile |
+| --- | --- |
+| ![cart page desktop](/documentation/pages_screenshots/cart_page_desktop.png) | ![cart page mobile](/documentation/pages_screenshots/cart_page_mobile.png) |
+
 #### Checkout (Payment) Page
+
+This page is used to display the payment form and submit the payment to stripe
+
+| Desktop | Mobile |
+| --- | --- |
+| ![checkout page desktop](/documentation/pages_screenshots/checkout_payment_page_desktop.png) | ![checkout page mobile](/documentation/pages_screenshots/checkout_payment_page_mobile.png) |
 
 #### Checkout (Success) Page
 
+This page is used to display the order confirmation and details
+
+| Desktop | Mobile |
+| --- | --- |
+| ![checkout success page desktop](/documentation/pages_screenshots/checkout_success_page_desktop.png) | ![checkout success page mobile](/documentation/pages_screenshots/checkout_success_page_mobile.png) |
+
+#### Profile Page
+
+This page is used to display the user's profile
+
+User can:
+- edit info used for making orders
+- view subscription status
+- renew subscription
+- view verification status
+- (testing purposes) request verification
+- view order history
+- access individual order details
+
+| Desktop | Mobile |
+| --- | --- |
+| ![profile page desktop](/documentation/pages_screenshots/profile_page_desktop.png) | ![profile page mobile](/documentation/pages_screenshots/profile_page_mobile.png) |
+
+#### Past Order Page
+
+This page is similar to the **Checkout (Success) Page** but is used to view a past order
+
+Users can:
+- (testing purposes) change the status of the order or make a ticket for maintenance
+
+In the future the changing of the status and creation of maintenance tickets will be done by the manager
+
 #### Checkout (Subscription Payment) Page
+
+Visually identical to the **Checkout (Payment) Page** but is used to pay for the subscription
 
 #### Checkout (Subscription Success) Page
 
+Visually identical to the **Checkout (Success) Page** but is used to show the confirmation of the subscription payment
+
 #### Maintenance Page
+
+This page is accesses only by the managers
+
+It displays a list of completed tickets and allows the manager to view the details of the ticket
+
+It also has a list of active tickets and allows the manager to edit the ticket or update the status of the ticket
+
+The manager can also create a new ticket
+
+| Desktop | Mobile |
+| --- | --- |
+| ![maintenance page desktop](/documentation/pages_screenshots/maintenance_page_desktop.png) | ![maintenance page mobile](/documentation/pages_screenshots/maintenance_page_mobile.png) |
 
 #### Add Maintenance Ticket Page
 
+This page can be accessed either from the maintenance page or from the from a past order page by the manager
+
+If accessed from a past order the page will be prepopulated with the details of the selected tool
+
+It contains a form to create a new maintenance ticket
+
+| Desktop | Mobile |
+| --- | --- |
+| ![add maintenance ticket page desktop](/documentation/pages_screenshots/add_ticket_page_desktop.png) | ![add maintenance ticket page mobile](/documentation/pages_screenshots/add_ticket_page_mobile.png) |
+
 #### Edit Maintenance Ticket Page
+
+This page is used to edit certain details of the maintenance ticket
+
+| Desktop | Mobile |
+| --- | --- |
+| ![edit maintenance ticket page desktop](/documentation/pages_screenshots/edit_ticket_page_desktop.png) | ![edit maintenance ticket page mobile](/documentation/pages_screenshots/edit_ticket_page_mobile.png) |
 
 #### Complete(Open) Maintenance Ticket Page
 
-#### Management Page
+This page is used to complete the maintenance ticket
+
+| Desktop | Mobile |
+| --- | --- |
+| ![complete maintenance ticket page desktop](/documentation/pages_screenshots/open_ticket_page_desktop.png) | ![complete maintenance ticket page mobile](/documentation/pages_screenshots/open_ticket_page_mobile.png) |
+
+#### View Past Maintenance Ticket Page
+
+This page is used to display a past maintenance ticket and its details
+
+| Desktop | Mobile |
+| --- | --- |
+| ![view maintenance ticket page desktop](/documentation/pages_screenshots/past_ticket_page_desktop.png) | ![view maintenance ticket page mobile](/documentation/pages_screenshots/past_ticket_page_mobile.png) |
+
+#### Product Management Page
+
+This page is accessed only by the managers and is used to manage the products and show the statuses of orders
+
+The manager can:
+- click through to an order, this is important because from there is where the manager can change the status of the order and create tickets
+- add a new tool
+- edit a tool
+- delete a tool
+- add a new party item
+- edit a party item (not implemented but would be similar to the tool edit page)
+
+| Desktop | Mobile |
+| --- | --- |
+| ![product management page desktop](/documentation/pages_screenshots/product_management_page_desktop.png) | ![product management page mobile](/documentation/pages_screenshots/product_management_page_mobile.png) |
 
 #### Add Tool Page
 
+This page contains a form to add a new tool to the inventory
+
+- the description field is a summer note field to allow for rich text
+- the image field is a custom widget that allows the user to upload an image and see a preview of the image
+
+| Desktop | Mobile |
+| --- | --- |
+| ![add tool page desktop](/documentation/pages_screenshots/add_tool_page_desktop.png) | ![add tool page mobile](/documentation/pages_screenshots/add_tool_page_mobile.png) |
+
+#### Add Party Item Page
+
+This page is similar to the add tool page but is used to add a new party item to the inventory
+
+| Desktop | Mobile |
+| --- | --- |
+| ![add party item page desktop](/documentation/pages_screenshots/add_party_item_page_desktop.png) | ![add party item page mobile](/documentation/pages_screenshots/add_party_item_page_mobile.png) |
+
 #### Edit Tool Page
 
+The edit tool page contains the same form as the add tool page but is prepopulated with the details of the selected tool
+
+| Desktop | Mobile |
+| --- | --- |
+| ![edit tool page desktop](/documentation/pages_screenshots/edit_tool_page_desktop.png) | ![edit tool page mobile](/documentation/pages_screenshots/edit_tool_page_mobile.png) |
+
 ### Structure and Navigation 
+
+#### NavBars 
+
+There are 2 main navigation bars. The **site navbar** is used to navigate the website and the **product navbar** is used to navigate the products page, controlling the category and sorting options 
+
+| Desktop | Mobile |
+| --- | --- |
+| ![site navbar desktop](/documentation/features/navbars_desktop.png) | ![site navbar mobile](/documentation/features/navbars_mobile.png) |
+
+**Site Navbar**
+
+This navbar is used to navigate the website, it contains the following links
+- Home
+- Cart (the cart icon)
+- Through Account dropdown
+    - Profile
+    - Logout (Login and Register if not logged in)
+    - Maintenance (only visible to managers)
+    - Product Management (only visible to managers)
+
+It has a search bar that allows users to search for items
+
+It has a responsive design that collapses into a hamburger menu on smaller screens
+
+Desktop: 
+
+![site navbar desktop](/documentation/features/site_navbar_desktop.png)
+
+Mobile:
+
+| Closed | Open |
+| --- | --- |
+| ![site navbar mobile closed](/documentation/features/site_navbar_mobile_closed.png) | ![site navbar mobile open](/documentation/features/site_navbar_mobile_open.png) |
+
+**Product Navbar**
+
+This navbar is used to navigate the products page with different sorting and category options.
+
+It contains 4 dropdown menus:
+
+All Items (sorting options for all items):
+ - By Price
+ - By Rating
+ - By Category
+ - All Items
+
+ ![all items dropdown](/documentation/features/item_filtering_all.png)
+
+Tool (category options for tool items):
+- Garden
+- DIY
+- Cleaning
+- All Tools
+
+![tool dropdown](/documentation/features/item_filtering_tool.png)
+
+Party Supplies (category options for party items):
+- Plates & Cutlery
+- Cups & Glasses
+- Other
+- All Party Supplies
+
+![party item dropdown](/documentation/features/item_filtering_party_item.png)
+
+Offers 
+- New Additions
+- Deals 
+- All Specials
+(this section has no items in the current implementation)
+
+![offer dropdown](/documentation/features/item_filtering_offers.png)    
+
+#### Urls
+
+
+The **Community Toolshed** project uses a modular URL structure to ensure clean and maintainable routing. Each app has its own `urls.py` file, which is included in the main project-level `urls.py` file. Below is a detailed explanation of how the URLs are connected to their respective views and functionalities.
+
+---
+
+##### **Project-Level URL Configuration**
+The main URL configuration is located in `community_toolshed/urls.py`. It acts as the entry point for routing requests to the appropriate app-level URL configurations.
+
+-> **Included URLs**
+1. **Admin Panel**
+   - **Path:** `/admin/`
+   - **View:** Django's built-in admin interface.
+   - **Purpose:** Provides access to the admin dashboard for managing the database and models.
+
+2. **User Authentication (Allauth)**
+   - **Path:** `/accounts/`
+   - **View:** Provided by Django Allauth.
+   - **Purpose:** Handles user authentication, including login, logout, and registration.
+
+3. **Text Editor (Summernote)**
+   - **Path:** `/summernote/`
+   - **View:** Provided by the `django_summernote` package.
+   - **Purpose:** Enables rich text editing for admin fields.
+
+4. **Homepage**
+   - **Path:** `/`
+   - **Included URLs:** `homepage/urls.py`
+   - **View:** `homepage.views.index`
+   - **Purpose:** Displays the main landing page of the website.
+
+5. **Products**
+   - **Path:** `/products/`
+   - **Included URLs:** `products/urls.py`
+   - **Purpose:** Handles product-related functionality, such as viewing, adding, editing, and deleting items.
+
+6. **Cart**
+   - **Path:** `/cart/`
+   - **Included URLs:** `cart/urls.py`
+   - **Purpose:** Manages the shopping cart, including adding, removing, and adjusting items.
+
+7. **Checkout**
+   - **Path:** `/checkout/`
+   - **Included URLs:** `checkout/urls.py`
+   - **Purpose:** Manages the checkout process, including payments and order confirmations.
+
+8. **Profiles**
+   - **Path:** `/profile/`
+   - **Included URLs:** `profiles/urls.py`
+   - **Purpose:** Manages user profiles, including subscription status, order history, and profile updates.
+
+9. **Maintenance**
+   - **Path:** `/maintenance/`
+   - **Included URLs:** `maintenance/urls.py`
+   - **Purpose:** Handles maintenance tickets for tools, including creating, editing, and completing tickets.
+
+10. **Static Media**
+    - **Path:** Serves media files during development using `static()`.
+
+---
+
+##### **App-Level URL Configurations**
+
+-> **Homepage App**
+- **File:** `homepage/urls.py`
+- **Path:** `/`
+- **View:** `homepage.views.index`
+- **Purpose:** Displays the homepage with an overview of the platform's features and a call-to-action for users to sign up or log in.
+
+---
+
+-> **Products App**
+- **File:** `products/urls.py`
+- **Paths and Views:**
+  - `/`: `products.views.all_products` - Displays all products available for rent.
+  - `/<int:product_id>`: `products.views.product_detail` - Displays details of a specific product.
+  - `/management/`: `products.views.management` - Displays the product management page (manager-only).
+  - `/add_tool/`: `products.views.add_tool` - Allows managers to add a new tool.
+  - `/add_party_item/`: `products.views.add_party_item` - Allows managers to add a new party item.
+  - `/edit_tool/<int:item_id>/`: `products.views.edit_tool` - Allows managers to edit an existing tool.
+  - `/edit_party_item/<int:item_id>/`: `products.views.edit_party_item` - Allows managers to edit an existing party item.
+  - `/delete_item/<int:item_id>/`: `products.views.delete_item` - Allows managers to delete an item.
+- **Purpose:** Manages product-related functionality for both users and managers.
+
+---
+
+-> **Cart App**
+- **File:** `cart/urls.py`
+- **Paths and Views:**
+  - `/`: `cart.views.view_cart` - Displays the shopping cart.
+  - `/add/<item_id>/`: `cart.views.add_to_cart` - Adds an item to the cart.
+  - `/adjust/<item_id>`: `cart.views.adjust_cart` - Adjusts the quantity of an item in the cart.
+  - `/remove/<item_id>/`: `cart.views.remove_from_cart` - Removes an item from the cart.
+- **Purpose:** Handles the shopping cart functionality.
+
+---
+
+-> **Checkout App**
+- **File:** `checkout/urls.py`
+- **Paths and Views:**
+  - `/`: `checkout.views.checkout` - Handles the checkout process.
+  - `/checkout_success/<order_number>`: `checkout.views.checkout_success` - Displays the order confirmation page.
+  - `/subscription_checkout/`: `checkout.views.subscription_checkout` - Handles subscription payments.
+  - `/subscription_checkout_success/<subscription_number>`: `checkout.views.subscription_checkout_success` - Displays the subscription confirmation page.
+  - `/cache_checkout_data/`: `checkout.views.cache_checkout_data` - Caches checkout data for Stripe.
+  - `/cache_subscription_checkout_data/`: `checkout.views.cache_subscription_checkout_data` - Caches subscription checkout data for Stripe.
+  - `/wh/`: `checkout.webhooks.webhook` - Handles Stripe webhooks.
+- **Purpose:** Manages the checkout and payment processes, including integration with Stripe.
+
+---
+
+-> **Profiles App**
+- **File:** `profiles/urls.py`
+- **Paths and Views:**
+  - `/`: `profiles.views.profile` - Displays the user's profile.
+  - `/order_history/<order_number>`: `profiles.views.order_history` - Displays the user's order history.
+  - `/order_management/<order_number>`: `profiles.views.order_management` - Allows managers to manage orders.
+  - `/verify_profile/<user_id>`: `profiles.views.verify_profile` - Allows managers to verify user profiles.
+- **Purpose:** Manages user profiles and order history.
+
+---
+
+-> **Maintenance App**
+- **File:** `maintenance/urls.py`
+- **Paths and Views:**
+  - `/`: `maintenance.views.maintenance` - Displays the maintenance dashboard.
+  - `/create_ticket/<tool_id>/<order_id>`: `maintenance.views.create_ticket` - Creates a maintenance ticket for a tool.
+  - `/create_new_ticket/`: `maintenance.views.create_new_ticket` - Creates a new maintenance ticket.
+  - `/edit_ticket/<ticket_id>`: `maintenance.views.edit_ticket` - Edits an existing maintenance ticket.
+  - `/complete_ticket/<ticket_id>`: `maintenance.views.complete_ticket` - Marks a maintenance ticket as complete.
+  - `/view_ticket/<ticket_id>`: `maintenance.views.view_ticket` - Displays the details of a maintenance ticket.
+- **Purpose:** Handles the maintenance process for tools, including ticket creation and status updates.
+
+---
+
+**Summary**
+The project uses a modular URL structure where each app has its own `urls.py` file to handle specific routes. The main `community_toolshed/urls.py` file includes these app-level URL configurations, ensuring a clean and organized routing system. This structure allows for easy scalability and maintainability, with clear separation of concerns between different functionalities such as products, cart, checkout, profiles, and maintenance.
 
 ### Colors 
 
@@ -472,14 +864,17 @@ Due to time constraints, there are some features that were not implemented in th
 ### Time Bound
 
 - there is some redundancy in my tables that could be removed
+- There is missing logic to control the availability of items during the rental period
 - I managed to implement the maintenance system for tool, but did not have time to implement the cleaning system for the party items
-- I waned to create dining sets with the part items but did not have time to implement this
+- likewise the product management system is only complete for tools
+- I wanted to create dining sets with the part items but did not have time to implement this
 
 ### Future Features
 
 - Add a feature to allow users to request items that are not currently in the inventory
 - Flesh out the rating system to allow users to rate items and leave reviews
 - use the built in stripe subscription feature to manage the subscription payments
+- adding a dark mode
 
 ## Credits 
 
@@ -507,3 +902,5 @@ and the tutorial lessons where followed in order to create this project
 - [stripe docs](https://docs.stripe.com/)
 - [css.glass](https://css.glass) - for glassmorphism effect
 - Youtube [tutorial by BugBytes](https://www.youtube.com/watch?v=qzrE7cfc_3Q&t=232s) for generating the ER diagrams for the django models
+- [RealFaviconGenerator](https://realfavicongenerator.net/your-favicon-is-ready) - for generating the favicon
+- [Django Favicon Guide by Micheal Yin](https://saashammer.com/blog/django-favicon-guide/) - for adding the favicon to the project
