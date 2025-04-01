@@ -102,7 +102,7 @@ This is the base template for the website. It contains the header, footer and th
                             <li><hr class="dropdown-divider"></li>
                             {% endif %}
                             <li><a href="{% url 'profile' %}" class="dropdown-item">My Profile</a></li>
-                            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                            <li><a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a></li>
                             {% else %}
                             <li><a href="{% url 'account_signup' %}" class="dropdown-item">Register</a></li>
                             <li><a href="{% url 'account_login' %}" class="dropdown-item">Login</a></li>

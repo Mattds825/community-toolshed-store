@@ -69,7 +69,7 @@
                                     <td class="text-center"><small>{{ tool.serial_number }}</small></td>
                                     <td class="text-center">
                                         <a href="{% url 'edit_tool' tool.id %}" class="btn btn-sm btn-warning my-1">Edit</a>
-                                        <button data-delete-url="{% url 'delete_item' tool.id %}" data-item-name="{{ tool.name }}" href="" class="deleteItemBtn btn btn-sm btn-danger my-1">Delete</button>
+                                        <button data-delete-url="{% url 'delete_item' tool.id %}" data-item-name="{{ tool.name }}" class="deleteItemBtn btn btn-sm btn-danger my-1">Delete</button>
                                     </td>
                                 </tr>
                             {% endfor %}

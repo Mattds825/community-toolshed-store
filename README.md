@@ -2,13 +2,57 @@
 
 # Community Toolshed
 
-[live site](https://ci-community-toolshed-afafcfe7f3c4.herokuapp.com/)
+-> [view live site](https://ci-community-toolshed-afafcfe7f3c4.herokuapp.com/)
+## Table of Contents
+1. [In a Nutshell](#in-a-nutshell)
+2. [Project Goals](#project-goals)
+   - [User & Subscription Management](#🔹-user--subscription-management)
+   - [Item Rentals (Tools & Party Items)](#🔹-item-rentals-tools--party-items)
+   - [Order & Rental Management](#🔹-order--rental-management)
+   - [Payments & Transactions](#🔹-payments--transactions)
+   - [Maintenance & Repairs](#🔹-maintenance--repairs)
+3. [Business Objectives](#🎯-business-objectives)
+4. [User Stories](#📖-user-stories)
+5. [Features](#features)
+   - [Main App Features](#main-app-features)
+   - [Django App Structure](#django-app-structure)
+6. [Database Design](#database-design)
+   - [Item Model](#item-model)
+   - [Category Model](#category-model)
+   - [Tool Model](#tool-model)
+   - [PartyItem Model](#partyitem-model)
+   - [Order Model](#order-model)
+   - [OrderItem Model](#orderitem-model)
+   - [Subscription Model](#subscription-model)
+   - [UserProfile Model](#userprofile-model)
+   - [MaintenanceTicket Model](#maintenanceticket-model)
+   - [EmailAddress and EmailConfirmation Models](#emailaddress-and-emailconfirmation-models)
+   - [Complete ERD](#compete-erd)
+7. [UI/UX](#uiux)
+   - [Mockups](#mockups)
+   - [Pages](#pages)
+   - [Structure and Navigation](#structure-and-navigation)
+   - [Colors](#colors)
+   - [Accessibility](#accessibility)
+   - [Defensive Design](#defensive-design)
+8. [Deployment](#deployment)
+9. [How to Use](#how-to-use)
+   - [As A User](#as-a-user)
+   - [As A Manager](#as-a-manager)
+   - [Stripe Card Test Numbers](#stripe-card-test-numbers)
+10. [Testing](#testing)
+11. [Future Considerations](#future-considerations)
+    - [Time Bound](#time-bound)
+    - [Future Features](#future-features)
+12. [Credits](#credits)
+    - [Technologies](#technologies)
+    - [Resources](#resources)
 
 This is the 4th milestone project for the CodeInstitute level 5 Web Application Development Course
 
 The Community Toolshed Renting Application is a platform that allows users to subscribe and rent tools and party items on a daily basis. Subscribers pay an annual fee to gain access to a shared inventory of tools and reusable party supplies, promoting sustainability, affordability, and community resource sharing.
 
-This project is potentially something that will be reworked into a live project used by the Handcross Hardware local store, where I currently help at.
+This project is potentially something that will be reworked into a live project used by the Handcross Hardware & Craft local store, where I currently help at and where there currently offer this service however without an online platform
 
 ## In a Nutshell
 
@@ -868,6 +912,8 @@ Due to time constraints, there are some features that were not implemented in th
 - I managed to implement the maintenance system for tool, but did not have time to implement the cleaning system for the party items
 - likewise the product management system is only complete for tools
 - I wanted to create dining sets with the part items but did not have time to implement this
+- add more in depth testing: the current testing is mainly manual testing, I would like to add more automated testing and also more in depth manual testing on the more complex features
+- improve accessibility and screen reader support
 
 ### Future Features
 
@@ -904,3 +950,4 @@ and the tutorial lessons where followed in order to create this project
 - Youtube [tutorial by BugBytes](https://www.youtube.com/watch?v=qzrE7cfc_3Q&t=232s) for generating the ER diagrams for the django models
 - [RealFaviconGenerator](https://realfavicongenerator.net/your-favicon-is-ready) - for generating the favicon
 - [Django Favicon Guide by Micheal Yin](https://saashammer.com/blog/django-favicon-guide/) - for adding the favicon to the project
+- [W3C HTML Validator](https://validator.w3.org/nu/) - for validating the HTML code

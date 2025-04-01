@@ -66,7 +66,7 @@ this template is the cart template for the website. It contains the cart items a
                                                 <button type="submit" name="update" class="d-none btn btn-primary btn-sm updateBtn">Update</button>
                                                 <a name="remove" id="remove_{{ cart_item.item_id }}" class="btn btn-danger btn-sm removeBtn">Remove</a>
                                             </div>
-                                        </form></div>
+                                        </form>
                                     </td>
                                     <td class="py-3">
                                         <p class="my-0">£{% calc_subtotal cart_item.item.price cart_item.quantity days_amount %}</p>                                        
