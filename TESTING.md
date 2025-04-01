@@ -219,3 +219,51 @@ The [base.css](community_toolshed/static/css/base.css) file was tested and no er
 The [checkout.css](community_toolshed/checkout/static/css/checkout.css) file was tested and no errors were found.
 
 ### Lighthouse Tests
+
+The test were run on the main pages accessed by a normal user of the website on a live deployment.
+
+The fact that the website is hosted on Heroku and uses a free dyno, the performance score is lower than expected.
+
+Also the AWS S3 bucket also affects the performance score. As does the use of the Django templating language and the bootstrap framework.
+
+Overall the Accessibility and SEO scores are really good, however the other scores can be improved in certain pages.
+
+#### Home Page
+
+| Mobile | Desktop |
+|--------|---------|
+| ![home page lighthouse mobile](documentation/lighthouse_tests/home_page_lighthouse_test_mobile.png) | ![home page lighthouse desktop](documentation/lighthouse_tests/home_page_lighthouse_test_desktop.png) |
+
+This page has a good performance score. I believe this is due to the fact that it is a simple page with no database queries.
+
+#### Products Page
+
+| Mobile | Desktop |
+|--------|---------|
+| ![products page lighthouse mobile](documentation/lighthouse_tests/products_page_lighthouse_test_mobile.png) | ![products page lighthouse desktop](documentation/lighthouse_tests/products_page_lighthouse_test_desktop.png) |
+
+This page has a pretty low score on mobile. I think this is due to the size of the images
+
+#### Product Detail Page
+
+| Mobile | Desktop |
+|--------|---------|
+| ![product detail page lighthouse mobile](documentation/lighthouse_tests/product_detail_page_lighthouse_test_mobile.png) | ![product detail page lighthouse desktop](documentation/lighthouse_tests/product_detail_page_lighthouse_test_desktop.png) |
+
+The page also has a low score on mobile. This is due to the size of the images and possible the "| safe" filter used to render the product description as HTML.
+
+#### Profile Page
+
+| Mobile | Desktop |
+|--------|---------|
+| ![profile page lighthouse mobile](documentation/lighthouse_tests/profile_page_lighthouse_test_mobile.png) | ![profile page lighthouse desktop](documentation/lighthouse_tests/profile_page_lighthouse_test_desktop.png) |
+
+The score is not great on mobile or desktop on this page. I think this is due to the fact that the page is quite complex and has a lot of database queries. I could improve this by using caching and improving how I handle the queries in the view.
+
+#### Cart Page
+
+| Mobile | Desktop |
+|--------|---------|
+| ![cart page lighthouse mobile](documentation/lighthouse_tests/cart_page_lighthouse_test_mobile.png) | ![cart page lighthouse desktop](documentation/lighthouse_tests/cart_page_lighthouse_test_desktop.png) |
+
+Here again the mobile score is significantly lower than the desktop score. This could be due to the size of the images and the fact that the page is quite complex.

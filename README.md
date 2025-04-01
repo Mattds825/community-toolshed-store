@@ -914,6 +914,7 @@ Due to time constraints, there are some features that were not implemented in th
 - I wanted to create dining sets with the part items but did not have time to implement this
 - add more in depth testing: the current testing is mainly manual testing, I would like to add more automated testing and also more in depth manual testing on the more complex features
 - improve accessibility and screen reader support
+- make improvements based on lighthouse audit
 
 ### Future Features
 
@@ -951,3 +952,4 @@ and the tutorial lessons where followed in order to create this project
 - [RealFaviconGenerator](https://realfavicongenerator.net/your-favicon-is-ready) - for generating the favicon
 - [Django Favicon Guide by Micheal Yin](https://saashammer.com/blog/django-favicon-guide/) - for adding the favicon to the project
 - [W3C HTML Validator](https://validator.w3.org/nu/) - for validating the HTML code
+- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) - for validating the CSS code

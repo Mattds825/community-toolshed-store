@@ -27,8 +27,6 @@ def cart_contents(request):
         
         # calculate the amount of days in the hire        
         
-        print('days amount', days_amount)
-        
         item = get_object_or_404(Item, pk=item_id)
         total += (quantity * item.price) * days_amount
         product_count += quantity

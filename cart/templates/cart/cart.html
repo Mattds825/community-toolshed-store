@@ -82,7 +82,7 @@ this template is the cart template for the website. It contains the cart items a
                             </tr>                           
                             <tr>
                                 <td colspan="5" class="text-right">
-                                    <h4><strong>Bag Total: ${{ total|floatformat:2 }}</strong></h4>
+                                    <h4><strong>Bag Total: £{{ total|floatformat:2 }}</strong></h4>
                                     {% if not profile.verified %}
                                         <p class="text-danger">Please verify your profile to proceed to checkout</p>
                                     {% endif %}                                                                        
